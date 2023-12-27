@@ -1,0 +1,27 @@
+\usepackage{marvosym} % Allows the use of symbols
+\usepackage{parskip} % Spacing adjustments
+
+% Header and footer
+
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[L]{\textcolor{gray}{\footnotesize\emph{Updated \today}}}
+\fancyfoot[R]{\textcolor{gray}{\footnotesize\emph{Available at \href{https://github.com/jhelvy/cv}{https://github.com/jhelvy/cv}}}}
+\fancyfoot[C]{\textcolor{gray}{\footnotesize\emph{Page \thepage\ of \pageref{LastPage}}}}
+\renewcommand{\headrulewidth}{0pt} % Removes the header line
+\renewcommand{\footrulewidth}{0pt} % Removes the footer line
+\usepackage{lastpage} % Required for \pageref{LastPage}
+
+% Font for Chinese symbols
+
+\usepackage{xeCJK} % For Chinese text
+\setCJKmainfont{kaiti.ttf}
+
+% Links
+
+\usepackage{hyperref}
+\usepackage{color}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour, linkcolor=linkcolour}

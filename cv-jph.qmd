@@ -1,0 +1,616 @@
+---
+format:
+  pdf:
+    toc: false
+    number-sections: false
+    colorlinks: true
+    documentclass: scrartcl
+    papersize: letter
+    pdf-engine: xelatex
+    mainfont: Avenir
+    sansfont: Avenir
+    fontsize: 10pt
+    geometry:
+      - margin=1in
+      - heightrounded
+    include-in-header:
+      - preamble.tex
+execute:
+  warning: false
+  echo: false
+  message: false
+  eval: true
+---
+
+```{r}
+#| name: setup
+#| include: false
+#| message: false
+#| eval: true
+
+knitr::opts_chunk$set(
+  fig.path = "figs/",
+  fig.width = 7.252,
+  fig.height = 4,
+  comment = "#>",
+  fig.retina = 3
+)
+
+source("functions.R")
+```
+
+\par\centering{\LARGE{John Paul Helveston, Ph.D.}}
+\par\centering{Engineering Management and Systems Engineering}
+\vspace{-5pt}
+\par\centering{The George Washington University}
+\vspace{-5pt}
+\par\centering{Science \& Engineering Hall, Office 2830}
+\vspace{-5pt}
+\par\centering{800 22nd St NW, Washington, DC 20052}
+\vspace{-5pt}
+\par\centering{{\large\Telefon} +1 (202) 994-7173}
+\vspace{-5pt}
+\par\centering{{\large\Letter} jph@gwu.edu}
+\vspace{-5pt}
+\par\centering{\href{http://www.jhelvy.com}{www.jhelvy.com}}
+
+# Academic Appointments
+
+\vspace{-10pt}
+\begin{longtable}{llp{15cm}}
+2018 - Present & \textbf{George Washington University}, Washington, D.C.& \\
+ & Assistant Professor, Engineering Management and Systems Engineering\\[5pt]
+
+2016 - 2018 & \textbf{Boston University}, Boston, MA & \\
+ & Postdoctoral Fellow, Institute for Sustainable Energy\\
+\end{longtable}
+
+# Education & Training
+
+\vspace{-10pt}
+\begin{longtable}{lll}
+
+    2016 & Carnegie Mellon University, Pittsburgh, PA & Ph.D. Engineering and Public Policy\\
+
+    \multicolumn{3}{l}{Dissertation: \emph{Development and Adoption of Plug-in Electric Vehicles in China: Markets, Policy, and Innovation}}\\
+    
+    \multicolumn{3}{l}{Doctoral Committee: \emph{Jeremy Michalek, Erica Fuchs, Elea McDonnell Feit, \& Valerie Karplus}}\\[5pt]
+    
+    2015 & Carnegie Mellon University, Pittsburgh, PA & M.S. Engineering and Public Policy\\
+
+    2010 & Virginia Tech, Blacksburg, VA & B.S. Engineering Science and Mechanics\\[5pt]
+
+    \multicolumn{2}{l}{\textbf{Mandarin Chinese Training}}\\
+
+    2010 & National Taiwan University, Taipei, Taiwan & Business Chinese (Huayu Scholarship) \\
+
+    2009 & Heilongjiang University, Harbin, China & Intensive Chinese (Critical Language Scholarship)\\
+
+    2008 & Liaoning Normal University, Dalian, China & Independent Study (Horton Scholarship)\\
+
+\end{longtable}
+
+# Research Interests
+
+- **Sustainable Technology Change**: Study how consumers, firms, markets, and policy affect the nature & pace of transitioning to sustainable energy and transportation technologies.
+- **Market Analytics for Decision Making**: Measure and model consumer preferences to assess policy and product design and simulate consumer choice behavior.
+- **Electric Vehicles \& Sustainable Transportation Technologies**: Assess barriers and opportunities to accelerating the development & adoption of sustainable transportation technologies.
+- **U.S.-China Climate Relationship**: Study the critical relationship between the US and China in developing and mass producing low carbon energy technologies.
+
+# Teaching Interests
+
+- **Programming \& Data Analytics**: Programming in R and Python; exploratory data analysis; data visualization; reproducibility.
+- **Choice Modeling**: Discrete choice modeling; consumer preferences and choice behavior; conjoint analysis; design decisions.
+- **Team Projects**: Open-ended, team-based projects that emphasize critical thinking and real-world data collection and analysis.
+
+
+
+
+
+# Publications
+
+<!-- Set spacing in between list -->
+
+\apptocmd{\tightlist}{\setlength{\itemsep}{8pt}}{}{}
+
+`r gscholar_stats("https://scholar.google.com/citations?user=DY2D56IAAAAJ")`
+
+ORCID: \href{https://orcid.org/0000-0002-2657-9191}{0000-0002-2657-9191}
+
+*indicates student advised by Helveston
+
+## A. Peer Reviewed Articles
+
+```{r}
+#| results: asis
+
+pubs <- get_cv_sheet('pubs') %>%
+  mutate(
+    journal  = ifelse(is.na(journal), '', paste0('_', journal, '_.')),
+    number   = ifelse(is.na(number), '', paste0(number, '.')),
+    doi      = ifelse(
+               is.na(doi), '',
+               paste0('DOI: [', doi, '](', 'https://doi.org/', doi, ')')),
+    year     = paste0("(", year, ")"),
+    title    = enquote(title),
+    citation = paste(author, year, title, journal, number, doi)
+  ) %>% 
+  arrange(desc(pub_date))
+
+make_ordered_list_filtered(pubs, "peer_reviewed")
+```
+
+## B. Full Length Conference Publications
+
+```{r}
+#| results: asis
+
+make_ordered_list_filtered(pubs, "conference")
+```
+
+## C. Working Papers & Papers Under Review
+
+```{r}
+#| results: asis
+ 
+make_ordered_list_filtered(pubs, "working")
+```
+
+## D. Magazine Publications
+
+```{r}
+#| results: asis
+ 
+make_ordered_list_filtered(pubs, "magazine")
+```
+
+## E. Books / Book Chapters
+
+```{r}
+#| results: asis
+ 
+make_ordered_list_filtered(pubs, "book")
+```
+
+## F. Opinion Editorials
+
+```{r}
+#| results: asis
+ 
+make_ordered_list_filtered(pubs, "oped")
+```
+
+## G. Other Publications
+
+```{r}
+#| results: asis
+
+make_ordered_list_filtered(pubs, "other")
+```
+
+## G. Theses
+
+```{r}
+#| results: asis
+
+make_ordered_list_filtered(pubs, "theses")
+```
+
+
+
+# Software
+
+```{r}
+#| results: asis
+ 
+make_ordered_list_filtered(pubs, "software")
+```
+
+
+
+# Honors / Awards
+
+```{r}
+#| results: asis
+
+awards <- get_cv_sheet('awards') %>%
+  mutate(citation = paste0(date, ": ", description, '.')) %>% 
+  pull(citation)
+
+make_bullet_list(awards)
+```
+
+# Fellowships / Scholarships
+
+```{r}
+#| results: asis
+
+scholarships <- get_cv_sheet('scholarships') %>%
+  mutate(citation = paste0(date, ": ", description, '.')) %>% 
+  pull(citation)
+
+make_bullet_list(scholarships)
+```
+
+# External Grants
+
+## A. Principal Investigator
+
+```{r}
+#| results: asis
+
+grants <- get_cv_sheet('grants') %>%
+  arrange(desc(submitted)) %>% 
+  mutate(
+    title = enquote(title),
+    amount = ifelse(
+      is.na(budget_total), "",
+      paste0(scales::dollar(budget_total), ".")
+    ),
+    citation = paste(sponsor, title, period, amount, sep = '. ')
+  ) 
+
+make_grants_list(grants, external = 1, pi = 1, affiliated = 0)
+```
+
+## B. Co-Principal Investigator
+
+```{r}
+#| results: asis
+
+make_grants_list(grants, external = 1, pi = 0, affiliated = 0)
+```
+
+## C. Affiliated
+
+```{r}
+#| results: asis
+
+make_grants_list(grants, external = 1, pi = 0, affiliated = 1)
+```
+
+# Internal Grants
+
+```{r}
+#| results: asis
+
+make_grants_list(grants, external = 0, pi = 1, affiliated = 0)
+```
+
+# Presentations / Conferences
+
+## A. Invited Speaker
+
+```{r}
+#| results: asis
+
+presentations <- get_cv_sheet('presentations') %>%
+  arrange(desc(date)) %>% 
+  mutate(
+    with = ifelse(is.na(with), '', paste0(', with ', with)),
+    title = paste0(enquote(title), with),
+    title = ifelse(is.na(series), title, paste(title, series, sep = '. ')),
+    date = paste0(format(as.Date(date), format = "%b %d, %Y"), '.'),
+    citation = paste(title, host, location, date, sep = '. ')
+  )
+
+make_ordered_list_filtered(presentations, "invited")
+```
+
+## B. Invited Panelist
+
+```{r}
+#| results: asis
+
+make_ordered_list_filtered(presentations, "panelist")
+```
+
+## C. Discussant
+
+```{r}
+#| results: asis
+
+make_ordered_list_filtered(presentations, "discussant")
+```
+
+## D. Conference Panel Organizer / Chair
+
+```{r}
+#| results: asis
+
+make_ordered_list_filtered(presentations, "organizer")
+```
+
+## E. Conference Presentations
+
+```{r}
+#| results: asis
+
+make_ordered_list_filtered(presentations, "conference")
+```
+
+## F. Posters
+
+```{r}
+#| results: asis
+
+make_ordered_list_filtered(presentations, "poster")
+```
+
+
+# Media Coverage
+
+<!-- Set spacing in between list -->
+
+\apptocmd{\tightlist}{\setlength{\itemsep}{2pt}}{}{}
+
+```{r}
+#| results: asis
+
+media <- get_cv_sheet('media') %>%
+  arrange(desc(date)) %>%
+  mutate(
+      date = format(date, format = "%b %d, %Y"),
+      outlet = paste0("**", outlet, "**"),
+      citation = paste0(date, ", ", outlet, ": ", post, '.')
+  ) %>% 
+  pull(citation)
+
+make_ordered_list(media)
+```
+
+ \newpage
+
+# Teaching & Education
+
+## A. Courses Taught at George Washington University
+
+```{r}
+df <- get_cv_sheet('teaching') %>% 
+    mutate(
+      course = paste0(number, ": ", name), 
+      num = paste(responses, '/', enrolled), 
+      score = paste(inst_mean, '/', dept_mean)
+    ) %>% 
+    select(
+      `Sem.` = semester,
+      Course = course,
+      Level = level, 
+      `N. Resp. / N. Enrolled` = num,
+      `Instr. FCE* / Dept Mean` = score
+    ) 
+
+df %>% 
+  kbl(booktabs = TRUE, escape = FALSE) %>% 
+  column_spec(4, width = "1.8cm") %>% 
+  column_spec(5, width = "2cm") %>% 
+  footnote(
+    symbol = "Faculty Course Evaluations (FCE) are scored by students (1 = worst, 5 = best).",
+    footnote_as_chunk = TRUE
+  )
+```
+
+## B. Educational Contributions
+ 
+### 1. Courses developed at GWU
+
+- **[EMSE 4571 / 6571](http://p4a.seas.gwu.edu/): Intro to Programming for Analytics**. Developed new open source introductory level programming course that provides a foundation in programming for data analytics using the [R programming language](https://www.r-project.org/) with a comparison to [Python](https://www.python.org/). 
+- **[EMSE 4572 / 6572](http://eda.seas.gwu.edu/): Exploratory Data Analysis**. Developed new open source course that provides a foundation in exploring data using the [R programming language](https://www.r-project.org/), including how to source, manage, wrangle, explore, and visualize a wide variety of data types. All analyses are reproducible from raw data to results using [RMarkdown](https://bookdown.org/yihui/rmarkdown/) and [Quarto](https://quarto.org/). Students demonstrate mastery of these skills through a semester-long research project of their own design, culminating in a reproducible final report and a 10-minute presentation of their findings.
+- **[EMSE 6035](http://madd.seas.gwu.edu/): Marketing Analytics for Design Decisions**. Developed a new open source course that introduces data analysis techniques to inform design decisions in an uncertain, competitive market. Over the course of the semester, students learn and apply theory and methods to a team project to assess the market competitiveness of an emerging product or technology. Students learn how to design and field conjoint surveys as well as how to source, manage, and visualize data and modeling results using the [R programming language](https://www.r-project.org/). Students demonstrate mastery of these skills through a semester-long research project of their own design, culminating in a final report and a 10-minute presentation of their design insights.
+
+### 2. Course resources and tools
+
+- **Textbook**: ["Programming for Analytics in R"](https://p4a.jhelvy.com/), written for [_EMSE 4571 / 6571: Intro to Programming for Analytics_](http://p4a.seas.gwu.edu/).
+- **Video lecture series** for [_EMSE 6035: Marketing of Technology_](http://madd.seas.gwu.edu/). Six-lecture series on conjoint survey theory and practice. [View on youtube](https://www.youtube.com/playlist?list=PLzFdSE-D7jUQnbczxdjohRqlBBrrsaFFg).
+- **Autograder** for [_EMSE 4571 / 6571: Intro to Programming for Analytics_](http://p4a.seas.gwu.edu/). Students can test and receive automated feedback on their programming assignments.
+- **Course website**: [http://p4a.seas.gwu.edu/](http://p4a.seas.gwu.edu/), for _EMSE 4571 / 6571: Intro to Programming for Analytics_. Open source lessons on the fundamentals of programming for data analytics in R with a comparison to Python.
+- **Course website**: [http://eda.seas.gwu.edu/](http://eda.seas.gwu.edu/), for _EMSE 4572 / 6572: Exploratory Data Analysis_. Open source lessons on sourcing, managing, transforming, and exploring a wide variety of data types in R.
+- **Course website**: [http://madd.seas.gwu.edu/](http://madd.seas.gwu.edu/), for _EMSE 6035: Marketing Analytics for Design Decisions_. Open source lessons on designing conjoint surveys and choice modeling in R.
+
+# Advising
+
+## A. Primary Research Advisor
+
+### 1. Ph.D. Students
+
+```{r}
+#| results: asis
+
+advisees <- get_cv_sheet('advising') %>%
+  arrange(desc(date_start)) %>% 
+  mutate(
+    date = paste0(' (',  date_start, ' to ', date_stop, ').'),
+    citation = ifelse(
+      is.na(title), name, paste0(name, ', ', enquote(title))
+    ),
+    citation = paste0(citation, ', ', institution, ' ', date)
+  ) 
+
+make_ordered_list_filtered(advisees, "phd")
+```
+
+### 2. Masters Students
+
+```{r}
+#| results: asis
+
+make_ordered_list_filtered(advisees, "ms")
+```
+
+### 3. Undergraduate Students
+
+```{r}
+#| results: asis
+
+make_ordered_list_filtered(advisees, "ug")
+```
+
+### 4. High School Students
+
+```{r}
+#| results: asis
+
+make_ordered_list_filtered(advisees, "hs")
+```
+
+## B. Ph.D. Committee Member
+
+```{r}
+#| results: asis
+
+make_ordered_list_filtered(advisees, "committee")
+```
+
+# Service
+
+## A. University Service (GWU)
+
+```{r}
+#| results: asis
+
+service <- get_cv_sheet('service') %>% 
+    mutate(citation = paste0(activity, ', ', org, ' (', dates, ').'))
+
+make_ordered_list_filtered(service, "gw")
+```
+
+## B. Service to Conferences / Associations
+
+```{r}
+#| results: asis
+
+make_ordered_list_filtered(service, "conference")
+```
+
+## C. Reviewer
+
+### 1. Journals
+
+```{r}
+#| results: asis
+
+reviews <- get_cv_sheet('reviews') %>%
+  arrange(desc(date)) %>% 
+  mutate(citation = ifelse(
+    is.na(date), org,
+    paste0(org, ' (', date, ').'))
+  )
+
+make_ordered_list_filtered(reviews, "journal")
+```
+
+### 2. Conferences
+
+```{r}
+#| results: asis
+
+make_ordered_list_filtered(reviews, "conference")
+```
+
+### 3. Funding
+
+```{r}
+#| results: asis
+
+make_ordered_list_filtered(reviews, "funding")
+```
+
+# Memberships in Professional Organizations
+
+- Transportation Research Board
+- Industry Studies Association
+- Academy of Management
+- INFORMS
+- U.S. Association for Energy Economics (USAEE / IAEE)
+- Tau Beta Pi
+- Phi Beta Kappa
+- Beijing Energy Network
+
+# Industry Experience
+
+- Intern, Electric Vehicle Charging Policy. Innovation Center for Energy & Transportation (iCET), Beijing, China (Jan. - May., 2011).
+- Engineering Intern, Wind Power Advanced Technology Operations. General Electric Company, Shanghai, China (Aug. - Dec., 2008).
+- Engineering Intern, Wind Power Advanced Technology Operations. General Electric Company, Greenville, SC, USA (Jun. - Aug., 2007).
+
+# Leadership, Volunteer, and Community Activities
+
+- _Co-Founder and Organizer_, [GW Coders](https://gwcoders.github.io/): Informal study group to apply computational and data analytics skills in research (2020-present).
+- _Analyst & Committee Member_, Boston University Climate Action Plan Task Force (2016 - 2018).
+- _Violinist_, Carnegie Mellon All University Orchestra, 1st Violin Section (2011 - 2015).
+_ Dance Instructor_, Tartan Swing (CMU Swing Dance Club) (2011 - 2015).
+- _Head Dance Instructor_, Solely Swing, Virginia Tech Swing Dance Club (2007 - 2010).
+- _Concert Master_, New River Valley Symphony Orchestra, Virginia Tech (2005 - 2010).
+- _Volunteer_, Virginia Tech Alternative Breaks Service Programs for Tau Beta Pi, Appalachia Service Project, & Presbyterian Campus Ministries (2006 - 2009).
+
+# Skills
+
+- **Language**: Mandarin Chinese (speaking: _fluent_, reading / writing: _intermediate_).
+- **Modeling & Analysis**: Discrete Choice Modeling, Conjoint Analysis, Decision Analysis, Monte Carlo Simulation, Consumer Preferences, Quantitative Policy Analysis, Process-Based Cost Modeling, Optimization, Regression.
+- **Data Collection**: Survey Design, Qualitative Interviews.
+- **Programming**: R, Python, Git, MatLab, LaTeX, Shiny, Stata, Mathematica, HTML, Wordpress.
+- **Software**: Adobe Photoshop, Adobe Illustrator, Microsoft Office, Analytica.
+
+# Dance Awards
+
+## A. Lindy Hop
+
+- **1st Place**: 2016 Advanced Jack \& Jill w/Banban, _China Lindy Hop Championships_, Beijing, China.
+- **3rd Place**: 2013 Open Jack \& Jill, _Rocktober_, Columbus, OH.
+- **5th Place**: 2012 Open Jack \& Jill, _Boston Tea Party_, Boston, MA.
+- **2nd Place**: 2012 Open Jack \& Jill w/Akemi Kinukawa, _Babble_, New York, NY.
+- **1st Place**: 2011 Open Strictly Lindy w/Annabel Truesdell Quisao, _International Lindy Hop Championships_, Washington, D.C.
+- **Finals**: 2011 Open Jack \& Jill, _Lindy Focus X_, Asheville, NC.
+- **Finals**: 2011 Open Jack \& Jill, _International Lindy Hop Championships_, Washington, D.C.
+
+## B. Solo Jazz / Charleston
+
+- **1st Place**: 2012 Solo Jazz, _Sparx_, Cleveland, OH.
+- **3rd Place**: 2012 Solo Charleston, _Stompology_, Rochester, NY.
+
+## C. Balboa
+
+- **Finals**: 2014 Strictly Balboa w/Jennifer Lee, _International Lindy Hop Championships_, Washington, D.C.
+- **3rd Place**: 2013 Amateur Strictly Balboa w/Annabel Truesdell Quisao, _All Balboa Weekend_, Independence, OH.
+- **4th Place**: 2013 Amateur Jack \& Jill, _All Balboa Weekend_, Independence, OH.
+- **Finals**: 2012 Amateur Jack \& Jill w/Nina Galicheva, _All Balboa Weekend_, Independence, OH.
+
+## D. Blues
+
+- **Finals**: 2013 Solo Riffin' Competition, _Steel City Blues_, Pittsburgh, PA.
+- **1st Place**: 2012 Solo Riffin' Competition, _Steel City Blues_, Pittsburgh, PA.
+- **Finals**: 2010 Open Jack \& Jill, _Steel City Blues_, Pittsburgh, PA.
+
+# References
+
+\begin{longtable}{p{7cm} p{8.6cm}}
+  \textbf{Erica R.H. Fuchs} & \textbf{Jeremy J. Michalek} \\
+  Professor & Professor \\
+  Department of Engineering and Public Policy & Department of Engineering and Public Policy \\
+  Carnegie Mellon University & Department of Mechanical Engineering \\
+  Baker Hall 131E & Carnegie Mellon University \\
+  5000 Forbes Avenue & Scaife Hall 324 \\
+  Pittsburgh, PA 15213 & 5000 Forbes Avenue \\
+  Phone: +1 (412) 268-1877 & Pittsburgh, PA 15213 \\
+  Email: erhf@andrew.cmu.edu & Phone: +1 (412) 268-3765 \\
+  & Email: jmichalek@cmu.edu \\
+  &  \\
+  \textbf{Elea McDonnell Feit} & \textbf{Valerie J. Karplus}\\
+  Associate Professor of Marketing & Associate Professor\\
+  LeBow College of Business & Department of Engineering and Public Policy\\
+  Drexel University & Carnegie Mellon University\\
+  Gerri C. LeBow Hall 828 & Scott Hall 5113\\
+  3141 Chestnut Street & 5000 Forbes Avenue\\
+  Philadelphia, PA 19104 & Pittsburgh, PA 15213\\
+  Phone: +1 (215) 571-4054 & Email: vkarplus@andrew.cmu.edu \\
+  Email: efeit@drexel.edu & \\
+  &  \\
+  \textbf{Peter Fox-Penner} & \textbf{Zoe Szajnfarber} \\
+  Director, Institute for Sustainable Energy & Professor \& Department Chair\\
+  Questrom School of Business & Engineering Management and Systems Engineering\\
+  Boston University & George Washington University\\
+  Rafik B. Hariri Building, Room 514A & Science \& Engineering Hall 2670\\
+  595 Commonwealth Ave. & 800 22nd Street, NW\\
+  Boston, MA 02215 & Washington, DC 20052 \\
+  Phone: +1 (617) 353-4298 & Phone: +1 (202) 994-7153\\
+  Email: pfoxfp@bu.edu & Email: zszajnfa@gwu.edu\\
+\end{longtable}
