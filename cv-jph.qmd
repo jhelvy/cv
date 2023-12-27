@@ -9,6 +9,7 @@ format:
     pdf-engine: xelatex
     mainfont: Avenir
     sansfont: Avenir
+    CJKmainfont: kaiti.ttf
     fontsize: 10pt
     geometry:
       - margin=1in
