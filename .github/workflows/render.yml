@@ -22,7 +22,8 @@ jobs:
 
     - name: Install R Packages
       run: |
-        Rscript -e "install.packages(c('pander', 'stringr', 'dplyr', 'googlesheets4', 'lubridate', 'kableExtra', 'xml2', 'rvest', 'curl', 'gargle', 'googledrive', 'httr'))"
+        Rscript -e "options(repos = 'http://cran.rstudio.com')"
+        Rscript -e "install.packages(c('curl', 'gargle', 'googledrive', 'httr', 'rvest', 'pander', 'stringr', 'dplyr', 'lubridate', 'kableExtra', 'xml2', 'googlesheets4'))"
 
     - name: Install TinyTeX
       run: |
