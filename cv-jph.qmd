@@ -7,8 +7,8 @@ format:
     documentclass: scrartcl
     papersize: letter
     pdf-engine: xelatex
-    mainfont: Avenir
-    sansfont: Avenir
+    mainfont: Raleway
+    sansfont: Raleway
     CJKmainfont: kaiti.ttf
     fontsize: 10pt
     geometry:
