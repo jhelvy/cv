@@ -28,6 +28,9 @@ jobs:
       run: |
         wget -qO- "https://yihui.org/tinytex/install-bin-unix.sh" | sh
         echo "PATH=$HOME/.TinyTeX/bin/x86_64-linux:$PATH" >> $GITHUB_ENV
+
+    - name: Install LaTeX Packages with TinyTeX
+      run: |
         tlmgr install marvosym parskip fancyhdr lastpage xecjk hyperref xcolor
 
     - name: Render PDF
