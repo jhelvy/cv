@@ -21,11 +21,12 @@ jobs:
       run: |
         Rscript -e "install.packages(c('pander', 'stringr', 'dplyr', 'googlesheets4', 'lubridate', 'kableExtra', 'xml2', 'rvest'))"
 
-    - name: Install LaTeX and Required Packages
+    - name: Install TinyTeX
       run: |
-        sudo apt-get update
-        sudo apt-get install -y texlive-latex-extra texlive-fonts-recommended
-        sudo apt-get install -y marvosym parskip fancyhdr lastpage xeCJK hyperref color
+        wget -qO- "https://yihui.org/tinytex/install-bin-unix.sh" | sh
+        export PATH=$HOME/.TinyTeX/bin/x86_64-linux:$PATH
+        tlmgr install marvosym parskip fancyhdr lastpage xecjk hyperref xcolor
+
 
     - name: Install Quarto
       run: |
