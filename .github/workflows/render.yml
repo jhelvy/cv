@@ -21,18 +21,11 @@ jobs:
       run: |
         Rscript -e "install.packages(c('pander', 'stringr', 'dplyr', 'googlesheets4', 'lubridate', 'kableExtra', 'xml2', 'rvest'))"
 
-    - name: Install LaTeX
-      uses: xu-cheng/latex-action@v2
-      with:
-        extra_packages: |
-          latexmk
-          marvosym
-          parskip
-          fancyhdr
-          lastpage
-          xeCJK
-          hyperref
-          color
+    - name: Install LaTeX and Required Packages
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y texlive-latex-extra texlive-fonts-recommended
+        sudo apt-get install -y marvosym parskip fancyhdr lastpage xeCJK hyperref color
 
     - name: Install Quarto
       run: |
