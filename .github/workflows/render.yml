@@ -22,7 +22,7 @@ jobs:
 
     - name: Install R Packages
       run: |
-        Rscript -e "install.packages(c('pander', 'stringr', 'dplyr', 'googlesheets4', 'lubridate', 'kableExtra', 'xml2', 'rvest'))"
+        Rscript -e "install.packages(c('pander', 'stringr', 'dplyr', 'googlesheets4', 'lubridate', 'kableExtra', 'xml2', 'rvest', 'curl', 'gargle', 'googledrive', 'httr'))"
 
     - name: Install TinyTeX
       run: |
