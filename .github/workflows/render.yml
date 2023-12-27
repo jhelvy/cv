@@ -19,7 +19,7 @@ jobs:
 
     - name: Install R Packages
       run: |
-        install.packages(c('pander', 'stringr', 'dplyr', 'googlesheets4', 'lubridate', 'kableExtra', 'xml2', 'rvest'))
+        Rscript -e "install.packages(c('pander', 'stringr', 'dplyr', 'googlesheets4', 'lubridate', 'kableExtra', 'xml2', 'rvest'))"
 
     - name: Install LaTeX
       uses: xu-cheng/latex-action@v2
