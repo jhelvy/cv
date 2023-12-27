@@ -55,6 +55,8 @@ source("functions.R")
 \vspace{-5pt}
 \par\centering{\href{http://www.jhelvy.com}{www.jhelvy.com}}
 
+\vspace{-10pt}
+
 # Academic Appointments
 
 \vspace{-10pt}
@@ -65,6 +67,8 @@ source("functions.R")
 2016 - 2018 & \textbf{Boston University}, Boston, MA & \\
  & Postdoctoral Fellow, Institute for Sustainable Energy\\
 \end{longtable}
+
+\vspace{-10pt}
 
 # Education & Training
 
@@ -91,6 +95,8 @@ source("functions.R")
 
 \end{longtable}
 
+\vspace{-10pt}
+
 # Research Interests
 
 - **Sustainable Technology Change**: Study how consumers, firms, markets, and policy affect the nature & pace of transitioning to sustainable energy and transportation technologies.
@@ -98,13 +104,13 @@ source("functions.R")
 - **Electric Vehicles \& Sustainable Transportation Technologies**: Assess barriers and opportunities to accelerating the development & adoption of sustainable transportation technologies.
 - **U.S.-China Climate Relationship**: Study the critical relationship between the US and China in developing and mass producing low carbon energy technologies.
 
+\vspace{-10pt}
+
 # Teaching Interests
 
 - **Programming \& Data Analytics**: Programming in R and Python; exploratory data analysis; data visualization; reproducibility.
 - **Choice Modeling**: Discrete choice modeling; consumer preferences and choice behavior; conjoint analysis; design decisions.
 - **Team Projects**: Open-ended, team-based projects that emphasize critical thinking and real-world data collection and analysis.
-
-
 
 
 
@@ -551,6 +557,8 @@ _ Dance Instructor_, Tartan Swing (CMU Swing Dance Club) (2011 - 2015).
 - **Programming**: R, Python, Git, MatLab, LaTeX, Shiny, Stata, Mathematica, HTML, Wordpress.
 - **Software**: Adobe Photoshop, Adobe Illustrator, Microsoft Office, Analytica.
 
+\newpage
+
 # Dance Awards
 
 ## A. Lindy Hop
@@ -580,6 +588,8 @@ _ Dance Instructor_, Tartan Swing (CMU Swing Dance Club) (2011 - 2015).
 - **Finals**: 2013 Solo Riffin' Competition, _Steel City Blues_, Pittsburgh, PA.
 - **1st Place**: 2012 Solo Riffin' Competition, _Steel City Blues_, Pittsburgh, PA.
 - **Finals**: 2010 Open Jack \& Jill, _Steel City Blues_, Pittsburgh, PA.
+
+\newpage
 
 # References
 
