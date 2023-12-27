@@ -24,7 +24,7 @@ jobs:
     - name: Install LaTeX
       uses: xu-cheng/latex-action@v2
       with:
-        packages: |
+        extra_packages: |
           latexmk
           marvosym
           parskip
