@@ -52,8 +52,13 @@ jobs:
       run: |
         quarto render cv-jph.qmd --to pdf
 
-    - name: Upload PDF
-      uses: actions/upload-artifact@v3
-      with:
-        name: rendered-pdf
-        path: cv-jph.pdf
+    - name: Set up Git Config
+      run: |
+        git config --global user.name 'John Paul Helveston'
+        git config --global user.email 'john.helveston@gmail.com'
+
+    - name: Commit and Push PDF
+      run: |
+        git add cv-jph.pdf
+        git commit -m "Update rendered PDF"
+        git push
