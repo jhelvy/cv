@@ -7,9 +7,6 @@ format:
     documentclass: scrartcl
     papersize: letter
     pdf-engine: xelatex
-    mainfont: Raleway
-    sansfont: Raleway
-    CJKmainfont: kaiti.ttf
     fontsize: 10pt
     geometry:
       - margin=1in
@@ -118,7 +115,7 @@ source("functions.R")
 
 <!-- Set spacing in between list -->
 
-\apptocmd{\tightlist}{\setlength{\itemsep}{8pt}}{}{}
+\apptocmd{\tightlist}{\setlength{\itemsep}{4pt}}{}{}
 
 `r gscholar_stats("https://scholar.google.com/citations?user=DY2D56IAAAAJ")`
 

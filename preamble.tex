@@ -1,6 +1,31 @@
 \usepackage{marvosym} % Allows the use of symbols
 \usepackage{parskip} % Spacing adjustments
 
+% Main font
+
+\usepackage{fontspec}
+\setmainfont{Raleway}[
+  Path           = ./fonts/,  % Adjust the path to match where you've placed the fonts
+  Extension      = .ttf,      % or .otf, depending on the font files you have
+  UprightFont    = *-Regular,
+  BoldFont       = *-Bold,
+  ItalicFont     = *-Italic,
+  BoldItalicFont = *-BoldItalic
+]
+\setsansfont{Raleway}[
+  Path           = ./fonts/,  % Adjust the path to match where you've placed the fonts
+  Extension      = .ttf,      % or .otf, depending on the font files you have
+  UprightFont    = *-Regular,
+  BoldFont       = *-Bold,
+  ItalicFont     = *-Italic,
+  BoldItalicFont = *-BoldItalic
+]
+
+% Chinese font
+
+\usepackage{xeCJK} % For Chinese text
+\setCJKmainfont[Path = ./fonts/]{kaiti.ttf}
+
 % Header and footer
 
 \usepackage{fancyhdr}
