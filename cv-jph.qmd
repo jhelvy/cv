@@ -35,6 +35,10 @@ knitr::opts_chunk$set(
 )
 
 source("functions.R")
+
+# Store IDs
+gscholar_id <- 'DY2D56IAAAAJ'
+gscholar_page <- paste0("https://scholar.google.com/citations?user=", gscholar_id)
 ```
 
 \par\centering{\LARGE{John Paul Helveston, Ph.D.}}
@@ -117,7 +121,7 @@ source("functions.R")
 
 \apptocmd{\tightlist}{\setlength{\itemsep}{4pt}}{}{}
 
-`r gscholar_stats("https://scholar.google.com/citations?user=DY2D56IAAAAJ")`
+`r gscholar_stats(gscholar_page)`
 
 ORCID: \href{https://orcid.org/0000-0002-2657-9191}{0000-0002-2657-9191}
 
