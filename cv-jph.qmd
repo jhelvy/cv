@@ -121,13 +121,13 @@ gscholar_page <- paste0("https://scholar.google.com/citations?user=", gscholar_i
 
 \apptocmd{\tightlist}{\setlength{\itemsep}{4pt}}{}{}
 
-`r gscholar_stats(gscholar_page)`
+<!-- `r gscholar_stats(gscholar_page)` -->
 
-ORCID: \href{https://orcid.org/0000-0002-2657-9191}{0000-0002-2657-9191}
+ORCID: \href{https://orcid.org/0000-0002-2657-9191}{0000-0002-2657-9191} | [Google Scholar Profile](https://scholar.google.com/citations?user=DY2D56IAAAAJ&hl=en)
 
 *indicates student advised by Helveston
 
-## A. Peer Reviewed Articles
+## A. Refereed Journal Articles
 
 ```{r}
 #| results: asis
@@ -148,7 +148,7 @@ pubs <- get_cv_sheet('pubs') %>%
 make_ordered_list_filtered(pubs, "peer_reviewed")
 ```
 
-## B. Full Length Conference Publications
+## B. Refereed Articles in Conference Proceedings
 
 ```{r}
 #| results: asis
@@ -164,15 +164,7 @@ make_ordered_list_filtered(pubs, "conference")
 make_ordered_list_filtered(pubs, "working")
 ```
 
-## D. Magazine Publications
-
-```{r}
-#| results: asis
- 
-make_ordered_list_filtered(pubs, "magazine")
-```
-
-## E. Books / Book Chapters
+## D. Books 
 
 ```{r}
 #| results: asis
@@ -180,7 +172,23 @@ make_ordered_list_filtered(pubs, "magazine")
 make_ordered_list_filtered(pubs, "book")
 ```
 
-## F. Opinion Editorials
+## E. Book Chapters
+
+```{r}
+#| results: asis
+ 
+make_ordered_list_filtered(pubs, "book_chapter")
+```
+
+## F. Magazine Publications
+
+```{r}
+#| results: asis
+ 
+make_ordered_list_filtered(pubs, "magazine")
+```
+
+## G. Opinion Editorials
 
 ```{r}
 #| results: asis
@@ -188,7 +196,7 @@ make_ordered_list_filtered(pubs, "book")
 make_ordered_list_filtered(pubs, "oped")
 ```
 
-## G. Other Publications
+## H. Other Publications
 
 ```{r}
 #| results: asis
@@ -196,7 +204,7 @@ make_ordered_list_filtered(pubs, "oped")
 make_ordered_list_filtered(pubs, "other")
 ```
 
-## G. Theses
+## I. Theses
 
 ```{r}
 #| results: asis
@@ -204,9 +212,7 @@ make_ordered_list_filtered(pubs, "other")
 make_ordered_list_filtered(pubs, "theses")
 ```
 
-
-
-# Software
+## J. Software
 
 ```{r}
 #| results: asis
@@ -240,50 +246,6 @@ scholarships <- get_cv_sheet('scholarships') %>%
 make_bullet_list(scholarships)
 ```
 
-# External Grants
-
-## A. Principal Investigator
-
-```{r}
-#| results: asis
-
-grants <- get_cv_sheet('grants') %>%
-  arrange(desc(submitted)) %>% 
-  mutate(
-    title = enquote(title),
-    amount = ifelse(
-      is.na(budget_total), "",
-      paste0(scales::dollar(budget_total), ".")
-    ),
-    citation = paste(sponsor, title, period, amount, sep = '. ')
-  ) 
-
-make_grants_list(grants, external = 1, pi = 1, affiliated = 0)
-```
-
-## B. Co-Principal Investigator
-
-```{r}
-#| results: asis
-
-make_grants_list(grants, external = 1, pi = 0, affiliated = 0)
-```
-
-## C. Affiliated
-
-```{r}
-#| results: asis
-
-make_grants_list(grants, external = 1, pi = 0, affiliated = 1)
-```
-
-# Internal Grants
-
-```{r}
-#| results: asis
-
-make_grants_list(grants, external = 0, pi = 1, affiliated = 0)
-```
 
 # Presentations / Conferences
 
@@ -345,6 +307,51 @@ make_ordered_list_filtered(presentations, "conference")
 make_ordered_list_filtered(presentations, "poster")
 ```
 
+# External Grants
+
+## A. Principal Investigator
+
+```{r}
+#| results: asis
+
+grants <- get_cv_sheet('grants') %>%
+  arrange(desc(submitted)) %>% 
+  mutate(
+    title = enquote(title),
+    amount = ifelse(
+      is.na(budget_total), "",
+      paste0(scales::dollar(budget_total), ".")
+    ),
+    citation = paste(sponsor, title, period, amount, sep = '. ')
+  ) 
+
+make_grants_list(grants, external = 1, pi = 1, affiliated = 0)
+```
+
+## B. Co-Principal Investigator
+
+```{r}
+#| results: asis
+
+make_grants_list(grants, external = 1, pi = 0, affiliated = 0)
+```
+
+## C. Affiliated
+
+```{r}
+#| results: asis
+
+make_grants_list(grants, external = 1, pi = 0, affiliated = 1)
+```
+
+# Internal Grants
+
+```{r}
+#| results: asis
+
+make_grants_list(grants, external = 0, pi = 1, affiliated = 0)
+```
+
 
 # Media Coverage
 
@@ -367,7 +374,7 @@ media <- get_cv_sheet('media') %>%
 make_ordered_list(media)
 ```
 
- \newpage
+
 
 # Teaching & Education
 
@@ -431,8 +438,12 @@ advisees <- get_cv_sheet('advising') %>%
     citation = ifelse(
       is.na(title), name, paste0(name, ', ', enquote(title))
     ),
-    citation = paste0(citation, ', ', institution, ' ', date)
-  ) 
+    citation = paste0(citation, ', ', institution, ' ', date), 
+    citation = ifelse(
+        is.na(defense_date), citation, 
+        paste0(citation, ' Defense date: ', defense_date)
+    )
+  )
 
 make_ordered_list_filtered(advisees, "phd")
 ```
@@ -515,7 +526,7 @@ make_ordered_list_filtered(reviews, "journal")
 make_ordered_list_filtered(reviews, "conference")
 ```
 
-### 3. Funding
+### 3. Funding panels
 
 ```{r}
 #| results: asis
