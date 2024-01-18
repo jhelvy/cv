@@ -216,6 +216,13 @@ make_ordered_list_filtered(pubs, "theses")
 
 ```{r}
 #| results: asis
+
+# downloads <- cranlogs::cran_downloads(
+#     package = c("logitr", "cbcTools", "renderthis"),
+#     from = '2020-01-01'
+# ) %>% 
+#     group_by(package) %>% 
+#     summarise(count = sum(count))
  
 make_ordered_list_filtered(pubs, "software")
 ```

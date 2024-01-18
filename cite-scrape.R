@@ -1,12 +1,12 @@
 source("functions.R")
 
-# Store IDs 
+# Store IDs
 gscholar_id <- 'DY2D56IAAAAJ'
 gscholar_page <- paste0("https://scholar.google.com/citations?user=", gscholar_id)
 
 sheet <- get_cv_sheet('pubs')
-id <- sheet %>% 
-    filter(!is.na(id_scholar)) %>% 
+id <- sheet %>%
+    filter(!is.na(id_scholar)) %>%
     pull(id_scholar)
 id <- id[1]
 url <- paste0(
@@ -17,7 +17,7 @@ url <- paste0(
 
 
 html <- xml2::read_html(url)
-rvest::html_elements(html, ".gs_scl") %>% 
+rvest::html_elements(html, ".gs_scl") %>%
     html_elements('a') %>%
     html_text2()
 
