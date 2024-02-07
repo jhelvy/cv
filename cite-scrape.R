@@ -26,3 +26,4 @@ library(httr)
 page <- GET(url)
 page_content <- str_to_lower(content(page, as = "text"))
 str_split(page_content, 'cited by')[[1]]
+
