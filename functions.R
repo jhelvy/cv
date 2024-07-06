@@ -48,17 +48,16 @@ make_ordered_list_filtered <- function(df, cat) {
   )
 }
 
-make_grants_list <- function(df, external, pi, affiliated) {
+filter_grants <- function(df, external, pi, affiliated) {
     df$is_external <- df$external == external
     df$is_pi <- df$pi == pi
     df$is_affiliated <- df$affiliated == affiliated
     x <- df %>%
-      filter(awarded == 1) %>%
-      filter(is_external) %>%
-      filter(is_pi) %>%
-      filter(is_affiliated) %>%
-      pull(citation)
-    return(make_ordered_list(x))
+        filter(awarded == 1) %>%
+        filter(is_external) %>%
+        filter(is_pi) %>%
+        filter(is_affiliated)
+    return(x)
 }
 
 na_to_space <- function(x) {

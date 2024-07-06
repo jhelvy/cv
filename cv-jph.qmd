@@ -118,8 +118,6 @@ gscholar_page <- paste0("https://scholar.google.com/citations?user=", gscholar_i
 ## A. Principal Investigator
 
 ```{r}
-#| results: asis
-
 grants <- get_cv_sheet('grants') %>%
   arrange(desc(submitted)) %>% 
   mutate(
@@ -128,46 +126,102 @@ grants <- get_cv_sheet('grants') %>%
       is.na(budget_total), "",
       scales::dollar(budget_total)
     ),
-    percent = budget_jph / budget_total,
+    percent = budget_jph / budget_total, 
     credit = ifelse(
-      is.na(budget_total), "", ifelse(
-      percent == 1, "100% Credit", 
-      paste0("Helveston portion ", scales::dollar(budget_jph)
-    ))),
+        is.na(budget_total), "", ifelse(
+        percent == 1, "100% Credit", 
+        paste0("Helveston portion ", scales::dollar(budget_jph)
+    ))), 
     colabs = ifelse(
       is.na(collaborators), amount, 
-      paste(paste0("With ", collaborators),  amount, sep = '. ')
-    ),
-    citation = paste(
-      sponsor, title, colabs, credit, period, sep = '. '
-    )
-  ) 
+      paste(paste0("With ", collaborators), amount, sep = '. ')
+    ), 
+    period = paste0(period, '.')
+  )
 
-make_grants_list(grants, external = 1, pi = 1, affiliated = 0)
+grants_ex_pi <- grants %>% 
+      filter_grants(external = 1, pi = 1, affiliated = 0)
+```
+
+**Total**: `r scales::dollar(sum(grants_ex_pi$budget_total))`; **Helveston Portion**: `r scales::dollar(sum(grants_ex_pi$budget_jph))`
+
+```{r}
+#| results: asis
+
+grants_ex_pi %>% 
+    mutate(
+      citation = paste(
+        sponsor, title, colabs, credit, period, sep = '. '
+      )
+    ) %>%
+    pull(citation) %>%
+    make_ordered_list()
 ```
 
 ## B. Co-Principal Investigator
 
 ```{r}
+grants_ex_copi <- grants %>% 
+      filter_grants(external = 1, pi = 0, affiliated = 0)
+```
+
+**Total**: `r scales::dollar(sum(grants_ex_copi$budget_total))`; **Helveston Portion**: `r scales::dollar(sum(grants_ex_copi$budget_jph))`
+
+```{r}
 #| results: asis
 
-make_grants_list(grants, external = 1, pi = 0, affiliated = 0)
+grants_ex_copi %>% 
+    mutate(
+      citation = paste(
+        sponsor, title, colabs, credit, period, sep = '. '
+      )
+    ) %>% 
+    pull(citation) %>%
+    make_ordered_list()
 ```
 
 ## C. Affiliated
 
 ```{r}
+grants_affiliated <- grants %>% 
+    filter_grants(external = 1, pi = 0, affiliated = 1) 
+```
+
+**Total**: `r scales::dollar(sum(grants_affiliated$budget_total))`
+
+```{r}
 #| results: asis
 
-make_grants_list(grants, external = 1, pi = 0, affiliated = 1)
+grants_affiliated %>% 
+    mutate(
+      citation = paste(
+        sponsor, title, colabs, period, sep = '. '
+      )
+    ) %>% 
+    pull(citation) %>%
+    make_ordered_list()
 ```
 
 # Internal Grants
 
 ```{r}
+grants_internal <- grants %>% 
+    filter_grants(external = 0, pi = 1, affiliated = 0)
+```
+
+**Total**: `r scales::dollar(sum(grants_internal$budget_total))`
+
+```{r}
 #| results: asis
 
-make_grants_list(grants, external = 0, pi = 1, affiliated = 0)
+grants_internal %>% 
+    mutate(
+      citation = paste(
+        sponsor, title, colabs, credit, period, sep = '. '
+      )
+    ) %>% 
+    pull(citation) %>%
+    make_ordered_list()
 ```
 
 # Honors / Awards
@@ -175,11 +229,10 @@ make_grants_list(grants, external = 0, pi = 1, affiliated = 0)
 ```{r}
 #| results: asis
 
-awards <- get_cv_sheet('awards') %>%
+get_cv_sheet('awards') %>%
   mutate(citation = paste0(date, ": ", description, '.')) %>% 
-  pull(citation)
-
-make_bullet_list(awards)
+  pull(citation) %>% 
+  make_bullet_list()
 ```
 
 # Fellowships / Scholarships
@@ -187,11 +240,10 @@ make_bullet_list(awards)
 ```{r}
 #| results: asis
 
-scholarships <- get_cv_sheet('scholarships') %>%
+get_cv_sheet('scholarships') %>%
   mutate(citation = paste0(date, ": ", description, '.')) %>% 
-  pull(citation)
-
-make_bullet_list(scholarships)
+  pull(citation) %>% 
+  make_bullet_list()
 ```
 
 # Publications
@@ -200,13 +252,15 @@ make_bullet_list(scholarships)
 
 \apptocmd{\tightlist}{\setlength{\itemsep}{4pt}}{}{}
 
-<!-- `r gscholar_stats(gscholar_page)` -->
+`r gscholar_stats(gscholar_page)`
 
 ORCID: \href{https://orcid.org/0000-0002-2657-9191}{0000-0002-2657-9191} | [Google Scholar Profile](https://scholar.google.com/citations?user=DY2D56IAAAAJ&hl=en)
 
-*indicates student advised by Helveston
+*Graduate student advised by Helveston
 
-The convention in my field is that the last author denotes intellectual direction by the senior author when student(s) advised by the senior author are engaged on the study. On non–student papers, authorship effort is denoted in standard order.
+**Undergraduate student advised by Helveston
+
+_Note on author order: In my field, it is conventional that the last author denotes intellectual direction by the senior author when student(s) advised by the senior author are engaged on the study. On non–student papers, authorship effort is denoted in standard order_.
 
 ## A. Refereed Journal Articles
 
