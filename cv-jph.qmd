@@ -113,7 +113,74 @@ gscholar_page <- paste0("https://scholar.google.com/citations?user=", gscholar_i
 - **Choice Modeling**: Discrete choice modeling; consumer preferences and choice behavior; conjoint analysis; design decisions.
 - **Team Projects**: Open-ended, team-based projects that emphasize critical thinking and real-world data collection and analysis.
 
+# External Grants
 
+## A. Principal Investigator
+
+```{r}
+#| results: asis
+
+grants <- get_cv_sheet('grants') %>%
+  arrange(desc(submitted)) %>% 
+  mutate(
+    title = enquote(title),
+    amount = ifelse(
+      is.na(budget_total), "",
+      paste0(scales::dollar(budget_total), ".")
+    ),
+    citation = paste(sponsor, title, period, amount, sep = '. ')
+  ) 
+
+make_grants_list(grants, external = 1, pi = 1, affiliated = 0)
+```
+
+## B. Co-Principal Investigator
+
+```{r}
+#| results: asis
+
+make_grants_list(grants, external = 1, pi = 0, affiliated = 0)
+```
+
+## C. Affiliated
+
+```{r}
+#| results: asis
+
+make_grants_list(grants, external = 1, pi = 0, affiliated = 1)
+```
+
+# Internal Grants
+
+```{r}
+#| results: asis
+
+make_grants_list(grants, external = 0, pi = 1, affiliated = 0)
+```
+
+# Honors / Awards
+
+```{r}
+#| results: asis
+
+awards <- get_cv_sheet('awards') %>%
+  mutate(citation = paste0(date, ": ", description, '.')) %>% 
+  pull(citation)
+
+make_bullet_list(awards)
+```
+
+# Fellowships / Scholarships
+
+```{r}
+#| results: asis
+
+scholarships <- get_cv_sheet('scholarships') %>%
+  mutate(citation = paste0(date, ": ", description, '.')) %>% 
+  pull(citation)
+
+make_bullet_list(scholarships)
+```
 
 # Publications
 
@@ -126,6 +193,8 @@ gscholar_page <- paste0("https://scholar.google.com/citations?user=", gscholar_i
 ORCID: \href{https://orcid.org/0000-0002-2657-9191}{0000-0002-2657-9191} | [Google Scholar Profile](https://scholar.google.com/citations?user=DY2D56IAAAAJ&hl=en)
 
 *indicates student advised by Helveston
+
+The convention in my field is that the last author denotes intellectual direction by the senior author when student(s) advised by the senior author are engaged on the study. On non–student papers, authorship effort is denoted in standard order.
 
 ## A. Refereed Journal Articles
 
@@ -227,33 +296,6 @@ make_ordered_list_filtered(pubs, "theses")
 make_ordered_list_filtered(pubs, "software")
 ```
 
-
-
-# Honors / Awards
-
-```{r}
-#| results: asis
-
-awards <- get_cv_sheet('awards') %>%
-  mutate(citation = paste0(date, ": ", description, '.')) %>% 
-  pull(citation)
-
-make_bullet_list(awards)
-```
-
-# Fellowships / Scholarships
-
-```{r}
-#| results: asis
-
-scholarships <- get_cv_sheet('scholarships') %>%
-  mutate(citation = paste0(date, ": ", description, '.')) %>% 
-  pull(citation)
-
-make_bullet_list(scholarships)
-```
-
-
 # Presentations / Conferences
 
 ## A. Invited Speaker
@@ -313,52 +355,6 @@ make_ordered_list_filtered(presentations, "conference")
 
 make_ordered_list_filtered(presentations, "poster")
 ```
-
-# External Grants
-
-## A. Principal Investigator
-
-```{r}
-#| results: asis
-
-grants <- get_cv_sheet('grants') %>%
-  arrange(desc(submitted)) %>% 
-  mutate(
-    title = enquote(title),
-    amount = ifelse(
-      is.na(budget_total), "",
-      paste0(scales::dollar(budget_total), ".")
-    ),
-    citation = paste(sponsor, title, period, amount, sep = '. ')
-  ) 
-
-make_grants_list(grants, external = 1, pi = 1, affiliated = 0)
-```
-
-## B. Co-Principal Investigator
-
-```{r}
-#| results: asis
-
-make_grants_list(grants, external = 1, pi = 0, affiliated = 0)
-```
-
-## C. Affiliated
-
-```{r}
-#| results: asis
-
-make_grants_list(grants, external = 1, pi = 0, affiliated = 1)
-```
-
-# Internal Grants
-
-```{r}
-#| results: asis
-
-make_grants_list(grants, external = 0, pi = 1, affiliated = 0)
-```
-
 
 # Media Coverage
 
