@@ -141,9 +141,11 @@ grants <- get_cv_sheet('grants') %>%
 
 grants_ex_pi <- grants %>% 
       filter_grants(external = 1, pi = 1, affiliated = 0)
+
+total_ex_pi <- scales::dollar(sum(grants_ex_pi$budget_total))
 ```
 
-**Total**: `r scales::dollar(sum(grants_ex_pi$budget_total))`; **Helveston Portion**: `r scales::dollar(sum(grants_ex_pi$budget_jph))`
+**Total under Helveston management**: `r total_ex_pi`
 
 ```{r}
 #| results: asis
@@ -163,9 +165,11 @@ grants_ex_pi %>%
 ```{r}
 grants_ex_copi <- grants %>% 
       filter_grants(external = 1, pi = 0, affiliated = 0)
+
+total_ex_copi <- scales::dollar(sum(grants_ex_copi$budget_jph))
 ```
 
-**Total**: `r scales::dollar(sum(grants_ex_copi$budget_total))`; **Helveston Portion**: `r scales::dollar(sum(grants_ex_copi$budget_jph))`
+**Total under Helveston management**: `r total_ex_copi`
 
 ```{r}
 #| results: asis
@@ -185,9 +189,11 @@ grants_ex_copi %>%
 ```{r}
 grants_affiliated <- grants %>% 
     filter_grants(external = 1, pi = 0, affiliated = 1) 
+
+total_affiliated <- scales::dollar(sum(grants_affiliated$budget_total)) 
 ```
 
-**Total**: `r scales::dollar(sum(grants_affiliated$budget_total))`
+**Total affiliated**: `r total_affiliated`
 
 ```{r}
 #| results: asis
@@ -202,14 +208,16 @@ grants_affiliated %>%
     make_ordered_list()
 ```
 
-# Internal Grants
+# Internal Grants (GWU)
 
 ```{r}
 grants_internal <- grants %>% 
     filter_grants(external = 0, pi = 1, affiliated = 0)
+
+total_internal <- scales::dollar(sum(grants_internal$budget_total))
 ```
 
-**Total**: `r scales::dollar(sum(grants_internal$budget_total))`
+**Total under Helveston management**: `r total_internal`
 
 ```{r}
 #| results: asis
@@ -252,7 +260,7 @@ get_cv_sheet('scholarships') %>%
 
 \apptocmd{\tightlist}{\setlength{\itemsep}{4pt}}{}{}
 
-`r gscholar_stats(gscholar_page)`
+<!-- `r gscholar_stats(gscholar_page)` -->
 
 ORCID: \href{https://orcid.org/0000-0002-2657-9191}{0000-0002-2657-9191} | [Google Scholar Profile](https://scholar.google.com/citations?user=DY2D56IAAAAJ&hl=en)
 
@@ -260,7 +268,7 @@ ORCID: \href{https://orcid.org/0000-0002-2657-9191}{0000-0002-2657-9191} | [Goog
 
 **Undergraduate student advised by Helveston
 
-_Note on author order: In my field, it is conventional that the last author denotes intellectual direction by the senior author when student(s) advised by the senior author are engaged on the study. On non–student papers, authorship effort is denoted in standard order_.
+_Note on author order: In my field, it is conventional that the last author denotes intellectual direction by the senior author when advised student(s) are engaged on the study. On non–student papers, authorship effort is denoted in standard order_.
 
 ## A. Refereed Journal Articles
 
@@ -299,20 +307,26 @@ make_ordered_list_filtered(pubs, "conference")
 make_ordered_list_filtered(pubs, "working")
 ```
 
-## D. Books 
-
-```{r}
-#| results: asis
- 
-make_ordered_list_filtered(pubs, "book")
-```
-
-## E. Book Chapters
+## D. Book Chapters
 
 ```{r}
 #| results: asis
  
 make_ordered_list_filtered(pubs, "book_chapter")
+```
+
+## E. Textbooks 
+
+```{r}
+#| results: asis
+ 
+pubs %>% 
+  mutate(
+    url = paste0('[', url_pub, '](', url_pub,')'),
+    citation = paste(author, year, title, journal, number, doi, url)
+  ) %>% 
+  arrange(desc(pub_date)) %>% 
+  make_ordered_list_filtered("textbook")
 ```
 
 ## F. Magazine Publications
@@ -398,20 +412,20 @@ make_ordered_list_filtered(presentations, "panelist")
 make_ordered_list_filtered(presentations, "discussant")
 ```
 
-## D. Conference Panel Organizer / Chair
-
-```{r}
-#| results: asis
-
-make_ordered_list_filtered(presentations, "organizer")
-```
-
-## E. Conference Presentations
+## D. Conference Presentations
 
 ```{r}
 #| results: asis
 
 make_ordered_list_filtered(presentations, "conference")
+```
+
+## E. Conference Panel Organizer / Chair
+
+```{r}
+#| results: asis
+
+make_ordered_list_filtered(presentations, "organizer")
 ```
 
 ## F. Posters
@@ -429,21 +443,38 @@ make_ordered_list_filtered(presentations, "poster")
 \apptocmd{\tightlist}{\setlength{\itemsep}{2pt}}{}{}
 
 ```{r}
-#| results: asis
-
 media <- get_cv_sheet('media') %>%
   arrange(desc(date)) %>%
   mutate(
       date = format(date, format = "%b %d, %Y"),
       outlet = paste0("**", outlet, "**"),
       citation = paste0(date, ", ", outlet, ": ", post, '.')
-  ) %>% 
-  pull(citation)
+  )
 
-make_ordered_list(media)
+media_counts <- media %>%
+  count(type) %>% 
+  mutate(
+    type = str_replace_all(type, '_', ' '),
+    type = str_to_title(type), 
+    type = ifelse(type == 'Tv', 'TV', type), 
+    type = ifelse(type == 'Government', 'Federal Government', type), 
+    cite = paste0(type, ' (', n, ')'),
+    has_press = str_detect(type, 'Press')
+  ) %>% 
+  arrange(!has_press) %>% 
+  pull(cite) %>% 
+  paste(collapse = ', ')
 ```
 
+**Total Media Appearances**: `r media_counts`
 
+```{r}
+#| results: asis
+
+media %>% 
+  pull(citation) %>% 
+  make_ordered_list()
+```
 
 # Teaching & Education
 
@@ -478,12 +509,13 @@ df %>%
  
 ### 1. Courses developed at GWU
 
-- **[EMSE 4571 / 6571](http://p4a.seas.gwu.edu/): Intro to Programming for Analytics**. Developed new open source introductory level programming course that provides a foundation in programming for data analytics using the [R programming language](https://www.r-project.org/) with a comparison to [Python](https://www.python.org/). 
-- **[EMSE 4572 / 6572](http://eda.seas.gwu.edu/): Exploratory Data Analysis**. Developed new open source course that provides a foundation in exploring data using the [R programming language](https://www.r-project.org/), including how to source, manage, wrangle, explore, and visualize a wide variety of data types. All analyses are reproducible from raw data to results using [RMarkdown](https://bookdown.org/yihui/rmarkdown/) and [Quarto](https://quarto.org/). Students demonstrate mastery of these skills through a semester-long research project of their own design, culminating in a reproducible final report and a 10-minute presentation of their findings.
-- **[EMSE 6035](http://madd.seas.gwu.edu/): Marketing Analytics for Design Decisions**. Developed a new open source course that introduces data analysis techniques to inform design decisions in an uncertain, competitive market. Over the course of the semester, students learn and apply theory and methods to a team project to assess the market competitiveness of an emerging product or technology. Students learn how to design and field conjoint surveys as well as how to source, manage, and visualize data and modeling results using the [R programming language](https://www.r-project.org/). Students demonstrate mastery of these skills through a semester-long research project of their own design, culminating in a final report and a 10-minute presentation of their design insights.
+- **[EMSE 4571 / 6571](http://p4a.seas.gwu.edu/): Intro to Programming for Analytics**. Developed new open-source introductory level course that provides a foundation in programming for data analytics using the [R programming language](https://www.r-project.org/) with a comparison to [Python](https://www.python.org/). 
+- **[EMSE 4572 / 6572](http://eda.seas.gwu.edu/): Exploratory Data Analysis**. Developed new open-source course that provides a foundation in exploring data using the [R programming language](https://www.r-project.org/), including how to source, manage, wrangle, explore, and visualize a wide variety of data types. All analyses are reproducible from raw data to results using [RMarkdown](https://bookdown.org/yihui/rmarkdown/) and [Quarto](https://quarto.org/). Students demonstrate mastery of these skills through a semester-long research project of their own design, culminating in a reproducible final report and a 10-minute presentation of their findings.
+- **[EMSE 6035](http://madd.seas.gwu.edu/): Marketing Analytics for Design Decisions**. Developed a new open-source course that introduces data analysis techniques to inform design decisions in an uncertain, competitive market. Over the course of the semester, students learn and apply theory and methods to a team project to assess the market competitiveness of an emerging product or technology. Students learn how to design and field conjoint surveys as well as how to source, manage, and visualize data and modeling results using the [R programming language](https://www.r-project.org/). Students demonstrate mastery of these skills through a semester-long research project of their own design, culminating in a final report and a 10-minute presentation of their design insights.
 
 ### 2. Course resources and tools
 
+- **Textbook**: ["Yet Another R Dataviz (YARD) Book"](https://yardbook.jhelvy.com/), written for [_EMSE 4572 / 6572: Exploratory Data Analysis_](http://eda.seas.gwu.edu/).
 - **Textbook**: ["Programming for Analytics in R"](https://p4a.jhelvy.com/), written for [_EMSE 4571 / 6571: Intro to Programming for Analytics_](http://p4a.seas.gwu.edu/).
 - **Video lecture series** for [_EMSE 6035: Marketing of Technology_](http://madd.seas.gwu.edu/). Six-lecture series on conjoint survey theory and practice. [View on youtube](https://www.youtube.com/playlist?list=PLzFdSE-D7jUQnbczxdjohRqlBBrrsaFFg).
 - **Autograder** for [_EMSE 4571 / 6571: Intro to Programming for Analytics_](http://p4a.seas.gwu.edu/). Students can test and receive automated feedback on their programming assignments.
@@ -495,11 +527,7 @@ df %>%
 
 ## A. Primary Research Advisor
 
-### 1. Ph.D. Students
-
 ```{r}
-#| results: asis
-
 advisees <- get_cv_sheet('advising') %>%
   arrange(desc(date_start)) %>% 
   mutate(
@@ -510,9 +538,17 @@ advisees <- get_cv_sheet('advising') %>%
     citation = paste0(citation, ', ', institution, ' ', date), 
     citation = ifelse(
         is.na(defense_date), citation, 
-        paste0(citation, ' Defense date: ', defense_date)
+        paste0('\\*', citation, ' Defense date: ', defense_date)
     )
   )
+```
+
+### 1. Ph.D. Students
+
+*Indicates dissertation successfully defended.
+
+```{r}
+#| results: asis
 
 make_ordered_list_filtered(advisees, "phd")
 ```
