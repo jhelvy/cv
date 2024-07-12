@@ -235,21 +235,16 @@ grants_internal %>%
 # Honors / Awards
 
 ```{r}
-#| results: asis
-
-get_cv_sheet('awards') %>%
-  mutate(citation = paste0(date, ": ", description, '.')) %>% 
-  pull(citation) %>% 
-  make_bullet_list()
+awards <- get_cv_sheet('awards') %>% 
+  arrange(desc(date)) %>% 
+  mutate(citation = paste0(date, ": ", description, '.'))
 ```
-
-# Fellowships / Scholarships
 
 ```{r}
 #| results: asis
 
-get_cv_sheet('scholarships') %>%
-  mutate(citation = paste0(date, ": ", description, '.')) %>% 
+awards %>% 
+  filter(category != 'student') %>% 
   pull(citation) %>% 
   make_bullet_list()
 ```
@@ -307,29 +302,21 @@ make_ordered_list_filtered(pubs, "conference")
 make_ordered_list_filtered(pubs, "working")
 ```
 
-## D. Book Chapters
+## D. Books and Book Chapters
 
 ```{r}
 #| results: asis
- 
-make_ordered_list_filtered(pubs, "book_chapter")
-```
 
-## E. Textbooks 
-
-```{r}
-#| results: asis
- 
 pubs %>% 
   mutate(
     url = paste0('[', url_pub, '](', url_pub,')'),
     citation = paste(author, year, title, journal, number, doi, url)
   ) %>% 
   arrange(desc(pub_date)) %>% 
-  make_ordered_list_filtered("textbook")
+  make_ordered_list_filtered("book")
 ```
 
-## F. Magazine Publications
+## E. Magazine Publications
 
 ```{r}
 #| results: asis
@@ -337,7 +324,7 @@ pubs %>%
 make_ordered_list_filtered(pubs, "magazine")
 ```
 
-## G. Opinion Editorials
+## F. Opinion Editorials
 
 ```{r}
 #| results: asis
@@ -345,7 +332,7 @@ make_ordered_list_filtered(pubs, "magazine")
 make_ordered_list_filtered(pubs, "oped")
 ```
 
-## H. Other Publications
+## G. Other Publications
 
 ```{r}
 #| results: asis
@@ -353,7 +340,7 @@ make_ordered_list_filtered(pubs, "oped")
 make_ordered_list_filtered(pubs, "other")
 ```
 
-## I. Theses
+## H. Theses
 
 ```{r}
 #| results: asis
@@ -361,7 +348,7 @@ make_ordered_list_filtered(pubs, "other")
 make_ordered_list_filtered(pubs, "theses")
 ```
 
-## J. Software
+## I. Software
 
 ```{r}
 #| results: asis
@@ -585,58 +572,57 @@ make_ordered_list_filtered(advisees, "hs")
 make_ordered_list_filtered(advisees, "committee")
 ```
 
+## Awards / Honors by Advised Students
+
+```{r}
+#| results: asis
+
+awards %>% 
+  filter(category == 'student') %>% 
+  pull(citation) %>% 
+  make_bullet_list()
+```
+
 # Service
 
-## A. University Service (GWU)
-
 ```{r}
-#| results: asis
-
 service <- get_cv_sheet('service') %>% 
-    mutate(citation = paste0(activity, ', ', org, ' (', dates, ').'))
-
-make_ordered_list_filtered(service, "gw")
+    mutate(citation = paste0(activity, ' (', dates, ').'))
 ```
 
-## B. Service to Conferences / Associations
+## A. Departmental Service (EMSE) 
 
 ```{r}
 #| results: asis
 
-make_ordered_list_filtered(service, "conference")
+make_ordered_list_filtered(service, "dept")
 ```
 
-## C. Reviewer
-
-### 1. Journals
+## B. College Level Service (School of Engineering and Applied Sciences, GWU)
 
 ```{r}
 #| results: asis
 
-reviews <- get_cv_sheet('reviews') %>%
-  arrange(desc(date)) %>% 
-  mutate(citation = ifelse(
-    is.na(date), org,
-    paste0(org, ' (', date, ').'))
-  )
-
-make_ordered_list_filtered(reviews, "journal")
+make_ordered_list_filtered(service, "college")
 ```
 
-### 2. Conferences
+## C. Professional Service
 
 ```{r}
 #| results: asis
 
-make_ordered_list_filtered(reviews, "conference")
+make_ordered_list_filtered(service, "professional")
 ```
 
-### 3. Funding panels
+## D. Peer Reviewer
 
 ```{r}
 #| results: asis
 
-make_ordered_list_filtered(reviews, "funding")
+get_cv_sheet('reviews') %>% 
+  filter(category == 'journal') %>% 
+  pull(org) %>% 
+  make_ordered_list()
 ```
 
 # Memberships in Professional Organizations
@@ -673,8 +659,6 @@ _ Dance Instructor_, Tartan Swing (CMU Swing Dance Club) (2011 - 2015).
 - **Data Collection**: Survey Design, Qualitative Interviews.
 - **Programming**: R, Python, Git, MatLab, LaTeX, Shiny, Stata, Mathematica, HTML, Wordpress.
 - **Software**: Adobe Photoshop, Adobe Illustrator, Microsoft Office, Analytica.
-
-\newpage
 
 # Dance Awards
 
