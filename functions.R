@@ -67,3 +67,7 @@ na_to_space <- function(x) {
 enquote <- function(x) {
   return(paste0('"', x, '"'))
 }
+
+markdown_url <- function(url) {
+  return(paste0('[', url, '](', url,')'))
+}

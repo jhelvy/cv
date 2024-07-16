@@ -309,7 +309,7 @@ make_ordered_list_filtered(pubs, "working")
 
 pubs %>% 
   mutate(
-    url = paste0('[', url_pub, '](', url_pub,')'),
+    url = markdown_url(url_pub),
     citation = paste(author, year, title, journal, number, doi, url)
   ) %>% 
   arrange(desc(pub_date)) %>% 
@@ -423,7 +423,7 @@ make_ordered_list_filtered(presentations, "organizer")
 make_ordered_list_filtered(presentations, "poster")
 ```
 
-# Media Coverage
+# Selected Media Coverage: Impact of Research in Society
 
 <!-- Set spacing in between list -->
 
@@ -458,7 +458,8 @@ media_counts <- media %>%
 ```{r}
 #| results: asis
 
-media %>% 
+media %>%
+  filter(highlight == 1) %>% 
   pull(citation) %>% 
   make_ordered_list()
 ```
@@ -468,7 +469,7 @@ media %>%
 ## A. Courses Taught at George Washington University
 
 ```{r}
-df <- get_cv_sheet('teaching') %>% 
+df <- get_cv_sheet('classes') %>% 
     mutate(
       course = paste0(number, ": ", name), 
       num = paste(responses, '/', enrolled), 
@@ -492,15 +493,53 @@ df %>%
   )
 ```
 
-## B. Educational Contributions
+## B. Workshops
+
+```{r}
+teaching <- get_cv_sheet('teaching') %>%
+  arrange(desc(date)) %>% 
+  mutate(
+    with = ifelse(is.na(with), '', paste0(', with ', with)),
+    title = paste0(enquote(title), with),
+    title = ifelse(is.na(host), title, paste(title, host, sep = '. ')),
+    date = paste0(format(as.Date(date), format = "%b %d, %Y"), '.'),
+    url = ifelse(is.na(url), NA, markdown_url(url)),
+    date = ifelse(is.na(url), date, paste0(date, '. ', url)), 
+    citation = paste(title, host, location, date, sep = '. ')
+  )
+```
+
+```{r}
+#| results: asis
+
+make_ordered_list_filtered(teaching, "workshop")
+```
+
+## C. Seminars
+
+```{r}
+#| results: asis
+
+make_ordered_list_filtered(teaching, "seminar")
+```
+
+## D. Guest Lectures
+
+```{r}
+#| results: asis
+
+make_ordered_list_filtered(teaching, "lecture")
+```
+
+## E. Educational Contributions
  
-### 1. Courses developed at GWU
+### 1. Courses Developed at GWU
 
 - **[EMSE 4571 / 6571](http://p4a.seas.gwu.edu/): Intro to Programming for Analytics**. Developed new open-source introductory level course that provides a foundation in programming for data analytics using the [R programming language](https://www.r-project.org/) with a comparison to [Python](https://www.python.org/). 
 - **[EMSE 4572 / 6572](http://eda.seas.gwu.edu/): Exploratory Data Analysis**. Developed new open-source course that provides a foundation in exploring data using the [R programming language](https://www.r-project.org/), including how to source, manage, wrangle, explore, and visualize a wide variety of data types. All analyses are reproducible from raw data to results using [RMarkdown](https://bookdown.org/yihui/rmarkdown/) and [Quarto](https://quarto.org/). Students demonstrate mastery of these skills through a semester-long research project of their own design, culminating in a reproducible final report and a 10-minute presentation of their findings.
 - **[EMSE 6035](http://madd.seas.gwu.edu/): Marketing Analytics for Design Decisions**. Developed a new open-source course that introduces data analysis techniques to inform design decisions in an uncertain, competitive market. Over the course of the semester, students learn and apply theory and methods to a team project to assess the market competitiveness of an emerging product or technology. Students learn how to design and field conjoint surveys as well as how to source, manage, and visualize data and modeling results using the [R programming language](https://www.r-project.org/). Students demonstrate mastery of these skills through a semester-long research project of their own design, culminating in a final report and a 10-minute presentation of their design insights.
 
-### 2. Course resources and tools
+### 2. Resources Developed
 
 - **Textbook**: ["Yet Another R Dataviz (YARD) Book"](https://yardbook.jhelvy.com/), written for [_EMSE 4572 / 6572: Exploratory Data Analysis_](http://eda.seas.gwu.edu/).
 - **Textbook**: ["Programming for Analytics in R"](https://p4a.jhelvy.com/), written for [_EMSE 4571 / 6571: Intro to Programming for Analytics_](http://p4a.seas.gwu.edu/).
@@ -516,7 +555,7 @@ df %>%
 
 ```{r}
 advisees <- get_cv_sheet('advising') %>%
-  arrange(desc(date_start)) %>% 
+  arrange(date_start) %>% 
   mutate(
     date = paste0(' (',  date_start, ' to ', date_stop, ').'),
     citation = ifelse(
@@ -525,35 +564,68 @@ advisees <- get_cv_sheet('advising') %>%
     citation = paste0(citation, ', ', institution, ' ', date), 
     citation = ifelse(
         is.na(defense_date), citation, 
-        paste0('\\*', citation, ' Defense date: ', defense_date)
+        paste0(citation, ' _Defense date: ', defense_date, '_.')
     )
   )
 ```
 
-### 1. Ph.D. Students
-
-*Indicates dissertation successfully defended.
+### 1. Ph.D. Students - Current
 
 ```{r}
 #| results: asis
 
-make_ordered_list_filtered(advisees, "phd")
+advisees %>% 
+  filter(category == 'phd') %>% 
+  filter(complete == 0) %>% 
+  mutate(
+    date = paste0(' (',  date_start, ' to present).'),
+    citation = paste0(
+      name, ', ', enquote(title), ', ', institution, ' ', date, ' ', 
+      '_Expected graduation: ', date_stop, '_.'
+    )
+  ) %>% 
+  pull(citation) %>% 
+  make_ordered_list()
 ```
 
-### 2. Masters Students
+### 2. Ph.D. Students - Completed
 
 ```{r}
 #| results: asis
 
-make_ordered_list_filtered(advisees, "ms")
+advisees %>% 
+  filter(complete == 1) %>% 
+  make_ordered_list_filtered("phd")
 ```
 
-### 3. Undergraduate Students
+### 3. Masters Students - Completed
 
 ```{r}
 #| results: asis
 
-make_ordered_list_filtered(advisees, "ug")
+advisees %>% 
+  filter(complete == 1) %>% 
+  make_ordered_list_filtered("ms")
+```
+
+### 4. Undergraduate Students - Current
+
+```{r}
+#| results: asis
+
+advisees %>% 
+  filter(complete == 0) %>% 
+  make_ordered_list_filtered("ug")
+```
+
+### 5. Undergraduate Students - Completed
+
+```{r}
+#| results: asis
+
+advisees %>% 
+  filter(complete == 1) %>% 
+  make_ordered_list_filtered("ug")
 ```
 
 ### 4. High School Students
@@ -566,10 +638,25 @@ make_ordered_list_filtered(advisees, "hs")
 
 ## B. Ph.D. Committee Member
 
+
+### 1. Ph.D. Students - Current
+
 ```{r}
 #| results: asis
 
-make_ordered_list_filtered(advisees, "committee")
+advisees %>% 
+  filter(complete == 0) %>% 
+  make_ordered_list_filtered("committee")
+```
+
+### 2. Ph.D. Students - Completed
+
+```{r}
+#| results: asis
+
+advisees %>% 
+  filter(complete == 1) %>% 
+  make_ordered_list_filtered("committee")
 ```
 
 ## Awards / Honors by Advised Students
@@ -616,13 +703,30 @@ make_ordered_list_filtered(service, "professional")
 
 ## D. Peer Reviewer
 
+Completed 71 journal reviews and 13 conference paper reviews (2013 - present)
+
+_List of journals_:
+
 ```{r}
 #| results: asis
 
-get_cv_sheet('reviews') %>% 
+journals <- get_cv_sheet('reviews') %>% 
   filter(category == 'journal') %>% 
-  pull(org) %>% 
-  make_ordered_list()
+  pull(org)
+
+n_journals <- length(journals)
+stop <- round(n_journals/2)
+df <- data.frame(
+  j1 = journals[1:stop], 
+  j2 = journals[(stop + 1):n_journals]
+) 
+
+df %>%
+  kbl(col.names = NULL, format = "latex", booktabs = TRUE) %>%
+  column_spec(1:2, width = "8cm") %>%
+  kable_styling(latex_options = c("hold_position")) %>%
+  row_spec(0, extra_latex_after = "") %>%
+  row_spec(1:nrow(df), hline_after = FALSE)
 ```
 
 # Memberships in Professional Organizations
