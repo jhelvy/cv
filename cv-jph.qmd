@@ -365,11 +365,7 @@ make_ordered_list_filtered(pubs, "software")
 
 # Presentations / Conferences
 
-## A. Invited Speaker
-
 ```{r}
-#| results: asis
-
 presentations <- get_cv_sheet('presentations') %>%
   arrange(desc(date)) %>% 
   mutate(
@@ -379,6 +375,34 @@ presentations <- get_cv_sheet('presentations') %>%
     date = paste0(format(as.Date(date), format = "%b %d, %Y"), '.'),
     citation = paste(title, host, location, date, sep = '. ')
   )
+
+presentation_counts <- presentations %>%
+  count(category) %>% 
+  left_join(data.frame(
+    category = c(
+      "invited", "panelist", "conference", "organizer", "poster", "discussant"
+    ), 
+    order = seq(6)
+  )) %>% 
+  mutate(
+    category = str_to_title(category),
+    category = ifelse(category == 'Invited', 'Invited Speaker', category),
+    category = ifelse(category == 'Panelist', 'Invited Panelist', category),
+    cite = paste0(category, ' (', n, ')')
+  ) %>%
+  arrange(order) %>% 
+  pull(cite) %>% 
+  paste(collapse = ', ')
+```
+
+**Summary of Presentations / Conferences**
+
+`r presentation_counts`
+
+## A. Invited Speaker
+
+```{r}
+#| results: asis
 
 make_ordered_list_filtered(presentations, "invited")
 ```
@@ -391,15 +415,7 @@ make_ordered_list_filtered(presentations, "invited")
 make_ordered_list_filtered(presentations, "panelist")
 ```
 
-## C. Discussant
-
-```{r}
-#| results: asis
-
-make_ordered_list_filtered(presentations, "discussant")
-```
-
-## D. Conference Presentations
+## C. Conference Presentations
 
 ```{r}
 #| results: asis
@@ -407,7 +423,7 @@ make_ordered_list_filtered(presentations, "discussant")
 make_ordered_list_filtered(presentations, "conference")
 ```
 
-## E. Conference Panel Organizer / Chair
+## D. Conference Panel Organizer / Chair
 
 ```{r}
 #| results: asis
@@ -415,12 +431,20 @@ make_ordered_list_filtered(presentations, "conference")
 make_ordered_list_filtered(presentations, "organizer")
 ```
 
-## F. Posters
+## E. Posters
 
 ```{r}
 #| results: asis
 
 make_ordered_list_filtered(presentations, "poster")
+```
+
+## F. Discussant
+
+```{r}
+#| results: asis
+
+make_ordered_list_filtered(presentations, "discussant")
 ```
 
 # Selected Media Coverage: Impact of Research in Society
@@ -453,7 +477,9 @@ media_counts <- media %>%
   paste(collapse = ', ')
 ```
 
-**Total Media Appearances**: `r media_counts`
+**Total Media Appearances**
+
+`r media_counts`
 
 ```{r}
 #| results: asis
@@ -473,7 +499,8 @@ df <- get_cv_sheet('classes') %>%
     mutate(
       course = paste0(number, ": ", name), 
       num = paste(responses, '/', enrolled), 
-      score = paste(inst_mean, '/', dept_mean)
+      score = paste(inst_mean, '/', dept_mean), 
+      semester = ifelse(semester == 'S20', 'S20$^†$', semester)
     ) %>% 
     select(
       `Sem.` = semester,
@@ -484,12 +511,14 @@ df <- get_cv_sheet('classes') %>%
     ) 
 
 df %>% 
-  kbl(booktabs = TRUE, escape = FALSE) %>% 
+  kbl(booktabs = TRUE, escape = FALSE, linesep = "") %>% 
   column_spec(4, width = "1.8cm") %>% 
   column_spec(5, width = "2cm") %>% 
   footnote(
-    symbol = "Faculty Course Evaluations (FCE) are scored by students (1 = worst, 5 = best).",
-    footnote_as_chunk = TRUE
+    symbol = c(
+      "Faculty Course Evaluations (FCE) are scored by students (1 = worst, 5 = best).", 
+      "No course evaluations were recorded in Spring 2020 due to the COVID19 pandemic."
+    )
   )
 ```
 
