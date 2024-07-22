@@ -705,7 +705,7 @@ make_ordered_list_filtered(service, "professional")
 
 Completed 71 journal reviews and 13 conference paper reviews (2013 - present)
 
-_List of journals_:
+_List of Journals_
 
 ```{r}
 #| results: asis
@@ -713,7 +713,7 @@ _List of journals_:
 journals <- get_cv_sheet('reviews') %>% 
   filter(category == 'journal') %>% 
   pull(org)
-
+journals <- str_replace_all(journals, 'and', '&')
 n_journals <- length(journals)
 stop <- round(n_journals/2)
 df <- data.frame(
@@ -721,12 +721,43 @@ df <- data.frame(
   j2 = journals[(stop + 1):n_journals]
 ) 
 
-df %>%
-  kbl(col.names = NULL, format = "latex", booktabs = TRUE) %>%
-  column_spec(1:2, width = "8cm") %>%
-  kable_styling(latex_options = c("hold_position")) %>%
+table_latex <- df %>%
+  kbl(
+    col.names = NULL, 
+    format = "latex", 
+    booktabs = FALSE, 
+    linesep = ""
+  ) %>%
+  column_spec(
+    1:2, 
+    width = "8.5cm", 
+    border_left = FALSE, 
+    border_right = FALSE
+  ) %>%
+  kable_styling(
+    latex_options = c("hold_position"), 
+    font_size = 9
+  ) %>%
   row_spec(0, extra_latex_after = "") %>%
   row_spec(1:nrow(df), hline_after = FALSE)
+
+# Remove all vertical lines
+table_latex <- gsub("\\\\hline", "", table_latex)
+table_latex <- gsub("\\\\cline\\{.*?\\}", "", table_latex)
+table_latex <- gsub("\\\\toprule", "", table_latex)
+table_latex <- gsub("\\\\midrule", "", table_latex)
+table_latex <- gsub("\\\\bottomrule", "", table_latex)
+table_latex <- gsub("\\\\addlinespace", "", table_latex)
+
+# Add custom LaTeX commands to remove vertical lines
+table_latex <- paste0(
+  "\\renewcommand{\\arraystretch}{1.0}\n",
+  "\\renewcommand{\\tabcolsep}{0.5em}\n",
+  "\\renewcommand{\\arrayrulewidth}{0.0pt}\n",
+  table_latex
+)
+
+cat(table_latex)
 ```
 
 # Memberships in Professional Organizations
