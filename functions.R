@@ -48,15 +48,13 @@ make_ordered_list_filtered <- function(df, cat) {
   )
 }
 
-filter_grants <- function(df, external, pi, affiliated) {
+filter_grants <- function(df, external, pi) {
     df$is_external <- df$external == external
     df$is_pi <- df$pi == pi
-    df$is_affiliated <- df$affiliated == affiliated
     x <- df %>%
         filter(awarded == 1) %>%
         filter(is_external) %>%
-        filter(is_pi) %>%
-        filter(is_affiliated)
+        filter(is_pi)
     return(x)
 }
 

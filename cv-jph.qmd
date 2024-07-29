@@ -115,11 +115,11 @@ gscholar_page <- paste0("https://scholar.google.com/citations?user=", gscholar_i
 
 # External Grants
 
-## A. Principal Investigator
-
 ```{r}
 grants <- get_cv_sheet('grants') %>%
   arrange(desc(submitted)) %>% 
+  filter(awarded == 1) %>% 
+  filter(affiliated == 0) %>% 
   mutate(
     title = enquote(title),
     amount = ifelse(
@@ -140,12 +140,21 @@ grants <- get_cv_sheet('grants') %>%
   )
 
 grants_ex_pi <- grants %>% 
-      filter_grants(external = 1, pi = 1, affiliated = 0)
+  filter_grants(external = 1, pi = 1)
+grants_ex_copi <- grants %>% 
+  filter_grants(external = 1, pi = 0)
+grants_internal <- grants %>% 
+  filter_grants(external = 0, pi = 1)
 
-total_ex_pi <- scales::dollar(sum(grants_ex_pi$budget_total))
+total <- scales::dollar(sum(grants$budget_total))
+total_ex_pi <- scales::dollar(sum(grants_ex_pi$budget_managed))
 ```
 
-**Total under Helveston management**: `r total_ex_pi`
+**Total External Funding**: `r total`
+
+**Total External Funding as PI**: `r total_ex_pi`
+
+## A. Principal Investigator
 
 ```{r}
 #| results: asis
@@ -163,15 +172,6 @@ grants_ex_pi %>%
 ## B. Co-Principal Investigator
 
 ```{r}
-grants_ex_copi <- grants %>% 
-      filter_grants(external = 1, pi = 0, affiliated = 0)
-
-total_ex_copi <- scales::dollar(sum(grants_ex_copi$budget_jph))
-```
-
-**Total under Helveston management**: `r total_ex_copi`
-
-```{r}
 #| results: asis
 
 grants_ex_copi %>% 
@@ -184,40 +184,7 @@ grants_ex_copi %>%
     make_ordered_list()
 ```
 
-## C. Affiliated
-
-```{r}
-grants_affiliated <- grants %>% 
-    filter_grants(external = 1, pi = 0, affiliated = 1) 
-
-total_affiliated <- scales::dollar(sum(grants_affiliated$budget_total)) 
-```
-
-**Total affiliated**: `r total_affiliated`
-
-```{r}
-#| results: asis
-
-grants_affiliated %>% 
-    mutate(
-      citation = paste(
-        sponsor, title, colabs, period, sep = '. '
-      )
-    ) %>% 
-    pull(citation) %>%
-    make_ordered_list()
-```
-
 # Internal Grants (GWU)
-
-```{r}
-grants_internal <- grants %>% 
-    filter_grants(external = 0, pi = 1, affiliated = 0)
-
-total_internal <- scales::dollar(sum(grants_internal$budget_total))
-```
-
-**Total under Helveston management**: `r total_internal`
 
 ```{r}
 #| results: asis
@@ -255,7 +222,7 @@ awards %>%
 
 \apptocmd{\tightlist}{\setlength{\itemsep}{4pt}}{}{}
 
-<!-- `r gscholar_stats(gscholar_page)` -->
+`r gscholar_stats(gscholar_page)`
 
 ORCID: \href{https://orcid.org/0000-0002-2657-9191}{0000-0002-2657-9191} | [Google Scholar Profile](https://scholar.google.com/citations?user=DY2D56IAAAAJ&hl=en)
 
