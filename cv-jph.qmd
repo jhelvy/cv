@@ -347,7 +347,7 @@ presentation_counts <- presentations %>%
   count(category) %>% 
   left_join(data.frame(
     category = c(
-      "invited", "panelist", "conference", "organizer", "poster", "discussant"
+      "invited", "panelist", "conference", "poster", "organizer", "discussant"
     ), 
     order = seq(6)
   )) %>% 
@@ -355,6 +355,8 @@ presentation_counts <- presentations %>%
     category = str_to_title(category),
     category = ifelse(category == 'Invited', 'Invited Speaker', category),
     category = ifelse(category == 'Panelist', 'Invited Panelist', category),
+    category = ifelse(category == 'Conference', 'Conference Presentation', category),
+    category = ifelse(category == 'Poster', '\\newline Poster Presentation', category),
     cite = paste0(category, ' (', n, ')')
   ) %>%
   arrange(order) %>% 
@@ -362,7 +364,7 @@ presentation_counts <- presentations %>%
   paste(collapse = ', ')
 ```
 
-**Summary of Presentations / Conferences**
+**Total Presentations by Category**: 
 
 `r presentation_counts`
 
@@ -497,7 +499,6 @@ teaching <- get_cv_sheet('teaching') %>%
   mutate(
     with = ifelse(is.na(with), '', paste0(', with ', with)),
     title = paste0(enquote(title), with),
-    title = ifelse(is.na(host), title, paste(title, host, sep = '. ')),
     date = paste0(format(as.Date(date), format = "%b %d, %Y"), '.'),
     url = ifelse(is.na(url), NA, markdown_url(url)),
     date = ifelse(is.na(url), date, paste0(date, '. ', url)), 
