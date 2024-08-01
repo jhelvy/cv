@@ -139,14 +139,16 @@ grants <- get_cv_sheet('grants') %>%
     period = paste0(period, '.')
   )
 
-grants_ex_pi <- grants %>% 
-  filter_grants(external = 1, pi = 1)
-grants_ex_copi <- grants %>% 
-  filter_grants(external = 1, pi = 0)
+grants_ex <- grants %>% 
+    filter(external == 1)
+grants_ex_pi <- grants_ex %>% 
+    filter(pi == 1)
+grants_ex_copi <- grants_ex %>% 
+    filter(pi == 0)
 grants_internal <- grants %>% 
-  filter_grants(external = 0, pi = 1)
+    filter(external == 0, pi == 1)
 
-total <- scales::dollar(sum(grants$budget_total))
+total <- scales::dollar(sum(grants_ex$budget_total))
 total_ex_pi <- scales::dollar(sum(grants_ex_pi$budget_managed))
 ```
 

@@ -48,16 +48,6 @@ make_ordered_list_filtered <- function(df, cat) {
   )
 }
 
-filter_grants <- function(df, external, pi) {
-    df$is_external <- df$external == external
-    df$is_pi <- df$pi == pi
-    x <- df %>%
-        filter(awarded == 1) %>%
-        filter(is_external) %>%
-        filter(is_pi)
-    return(x)
-}
-
 na_to_space <- function(x) {
   return(ifelse(is.na(x), '', x))
 }
