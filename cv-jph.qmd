@@ -224,21 +224,15 @@ awards %>%
 
 \apptocmd{\tightlist}{\setlength{\itemsep}{4pt}}{}{}
 
-`r gscholar_stats(gscholar_page)`
-
 ORCID: \href{https://orcid.org/0000-0002-2657-9191}{0000-0002-2657-9191} | [Google Scholar Profile](https://scholar.google.com/citations?user=DY2D56IAAAAJ&hl=en)
 
-*Graduate student advised by Helveston
-
-**Undergraduate student advised by Helveston
+\underline{Underline} indicates advisee; * graduate student, **undergraduate student
 
 _Note on author order: In my field, it is conventional that the last author denotes intellectual direction by the senior author when advised student(s) are engaged on the study. On non–student papers, authorship effort is denoted in standard order_.
 
 ## A. Refereed Journal Articles
 
 ```{r}
-#| results: asis
-
 pubs <- get_cv_sheet('pubs') %>%
   mutate(
     journal  = ifelse(is.na(journal), '', paste0('_', journal, '_.')),
@@ -251,6 +245,10 @@ pubs <- get_cv_sheet('pubs') %>%
     citation = paste(author, year, title, journal, number, doi)
   ) %>% 
   arrange(desc(pub_date))
+```
+
+```{r}
+#| results: asis
 
 make_ordered_list_filtered(pubs, "peer_reviewed")
 ```
@@ -824,39 +822,39 @@ _ Dance Instructor_, Tartan Swing (CMU Swing Dance Club) (2011 - 2015).
 - **1st Place**: 2012 Solo Riffin' Competition, _Steel City Blues_, Pittsburgh, PA.
 - **Finals**: 2010 Open Jack \& Jill, _Steel City Blues_, Pittsburgh, PA.
 
-\newpage
+<!-- \newpage -->
 
-# References
+<!-- # References -->
 
-\begin{longtable}{p{7cm} p{8.6cm}}
-  \textbf{Erica R.H. Fuchs} & \textbf{Jeremy J. Michalek} \\
-  Professor & Professor \\
-  Department of Engineering and Public Policy & Department of Engineering and Public Policy \\
-  Carnegie Mellon University & Department of Mechanical Engineering \\
-  Baker Hall 131E & Carnegie Mellon University \\
-  5000 Forbes Avenue & Scaife Hall 324 \\
-  Pittsburgh, PA 15213 & 5000 Forbes Avenue \\
-  Phone: +1 (412) 268-1877 & Pittsburgh, PA 15213 \\
-  Email: erhf@andrew.cmu.edu & Phone: +1 (412) 268-3765 \\
-  & Email: jmichalek@cmu.edu \\
-  &  \\
-  \textbf{Elea McDonnell Feit} & \textbf{Valerie J. Karplus}\\
-  Associate Professor of Marketing & Associate Professor\\
-  LeBow College of Business & Department of Engineering and Public Policy\\
-  Drexel University & Carnegie Mellon University\\
-  Gerri C. LeBow Hall 828 & Scott Hall 5113\\
-  3141 Chestnut Street & 5000 Forbes Avenue\\
-  Philadelphia, PA 19104 & Pittsburgh, PA 15213\\
-  Phone: +1 (215) 571-4054 & Email: vkarplus@andrew.cmu.edu \\
-  Email: efeit@drexel.edu & \\
-  &  \\
-  \textbf{Peter Fox-Penner} & \textbf{Zoe Szajnfarber} \\
-  Director, Institute for Sustainable Energy & Professor \& Department Chair\\
-  Questrom School of Business & Engineering Management and Systems Engineering\\
-  Boston University & George Washington University\\
-  Rafik B. Hariri Building, Room 514A & Science \& Engineering Hall 2670\\
-  595 Commonwealth Ave. & 800 22nd Street, NW\\
-  Boston, MA 02215 & Washington, DC 20052 \\
-  Phone: +1 (617) 353-4298 & Phone: +1 (202) 994-7153\\
-  Email: pfoxfp@bu.edu & Email: zszajnfa@gwu.edu\\
-\end{longtable}
+<!-- \begin{longtable}{p{7cm} p{8.6cm}} -->
+<!--   \textbf{Erica R.H. Fuchs} & \textbf{Jeremy J. Michalek} \\ -->
+<!--   Professor & Professor \\ -->
+<!--   Department of Engineering and Public Policy & Department of Engineering and Public Policy \\ -->
+<!--   Carnegie Mellon University & Department of Mechanical Engineering \\ -->
+<!--   Baker Hall 131E & Carnegie Mellon University \\ -->
+<!--   5000 Forbes Avenue & Scaife Hall 324 \\ -->
+<!--   Pittsburgh, PA 15213 & 5000 Forbes Avenue \\ -->
+<!--   Phone: +1 (412) 268-1877 & Pittsburgh, PA 15213 \\ -->
+<!--   Email: erhf@andrew.cmu.edu & Phone: +1 (412) 268-3765 \\ -->
+<!--   & Email: jmichalek@cmu.edu \\ -->
+<!--   &  \\ -->
+<!--   \textbf{Elea McDonnell Feit} & \textbf{Valerie J. Karplus}\\ -->
+<!--   Associate Professor of Marketing & Associate Professor\\ -->
+<!--   LeBow College of Business & Department of Engineering and Public Policy\\ -->
+<!--   Drexel University & Carnegie Mellon University\\ -->
+<!--   Gerri C. LeBow Hall 828 & Scott Hall 5113\\ -->
+<!--   3141 Chestnut Street & 5000 Forbes Avenue\\ -->
+<!--   Philadelphia, PA 19104 & Pittsburgh, PA 15213\\ -->
+<!--   Phone: +1 (215) 571-4054 & Email: vkarplus@andrew.cmu.edu \\ -->
+<!--   Email: efeit@drexel.edu & \\ -->
+<!--   &  \\ -->
+<!--   \textbf{Peter Fox-Penner} & \textbf{Zoe Szajnfarber} \\ -->
+<!--   Director, Institute for Sustainable Energy & Professor \& Department Chair\\ -->
+<!--   Questrom School of Business & Engineering Management and Systems Engineering\\ -->
+<!--   Boston University & George Washington University\\ -->
+<!--   Rafik B. Hariri Building, Room 514A & Science \& Engineering Hall 2670\\ -->
+<!--   595 Commonwealth Ave. & 800 22nd Street, NW\\ -->
+<!--   Boston, MA 02215 & Washington, DC 20052 \\ -->
+<!--   Phone: +1 (617) 353-4298 & Phone: +1 (202) 994-7153\\ -->
+<!--   Email: pfoxfp@bu.edu & Email: zszajnfa@gwu.edu\\ -->
+<!-- \end{longtable} -->

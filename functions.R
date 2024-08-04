@@ -48,6 +48,21 @@ make_ordered_list_filtered <- function(df, cat) {
   )
 }
 
+make_ordered_list_filtered <- function(df, cat) {
+  return(df %>%
+    filter(category == {{cat}}) %>%
+        mutate(
+            citation = str_replace_all(
+                citation,
+                "\\\\\\*(\\w+),",
+                "\\\\*\\\\underline{\\1},"
+            )
+        ) %>%
+    pull(citation) %>%
+    make_ordered_list()
+  )
+}
+
 na_to_space <- function(x) {
   return(ifelse(is.na(x), '', x))
 }
