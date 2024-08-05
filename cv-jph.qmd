@@ -161,14 +161,22 @@ total_ex_pi <- scales::dollar(sum(grants_ex_pi$budget_managed))
 ```{r}
 #| results: asis
 
-grants_ex_pi %>% 
-    mutate(
-      citation = paste(
-        sponsor, title, colabs, credit, period, sep = '. '
-      )
-    ) %>%
-    pull(citation) %>%
-    make_ordered_list()
+make_grants_list <- function(df) {
+  df %>% 
+      mutate(
+        title = ifelse(
+          is.na(url), title, 
+          paste0('[', title, ']', '(', url, ')')
+        ),
+        citation = paste(
+          sponsor, title, colabs, credit, period, sep = '. '
+        )
+      ) %>%
+      pull(citation) %>%
+      make_ordered_list()
+}
+
+make_grants_list(grants_ex_pi)
 ```
 
 ## B. Co-Principal Investigator
@@ -176,14 +184,7 @@ grants_ex_pi %>%
 ```{r}
 #| results: asis
 
-grants_ex_copi %>% 
-    mutate(
-      citation = paste(
-        sponsor, title, colabs, credit, period, sep = '. '
-      )
-    ) %>% 
-    pull(citation) %>%
-    make_ordered_list()
+make_grants_list(grants_ex_copi)
 ```
 
 # Internal Grants (GWU)
@@ -191,14 +192,7 @@ grants_ex_copi %>%
 ```{r}
 #| results: asis
 
-grants_internal %>% 
-    mutate(
-      citation = paste(
-        sponsor, title, colabs, credit, period, sep = '. '
-      )
-    ) %>% 
-    pull(citation) %>%
-    make_ordered_list()
+make_grants_list(grants_internal)
 ```
 
 # Honors / Awards
@@ -228,7 +222,9 @@ ORCID: \href{https://orcid.org/0000-0002-2657-9191}{0000-0002-2657-9191} | [Goog
 
 \underline{Underline} indicates advisee; * graduate student, **undergraduate student
 
-_Note on author order: In my field, it is conventional that the last author denotes intellectual direction by the senior author when advised student(s) are engaged on the study. On non–student papers, authorship effort is denoted in standard order_.
+\begin{small}
+\emph{Note on author order: In my field, it is conventional that the last author denotes intellectual direction by the senior author when advised student(s) are engaged on the study. On non–student papers, authorship effort is denoted in standard order}.
+\end{small}
 
 ## A. Refereed Journal Articles
 
