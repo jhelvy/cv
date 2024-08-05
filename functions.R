@@ -43,14 +43,6 @@ make_bullet_list <- function(x) {
 make_ordered_list_filtered <- function(df, cat) {
   return(df %>%
     filter(category == {{cat}}) %>%
-    pull(citation) %>%
-    make_ordered_list()
-  )
-}
-
-make_ordered_list_filtered <- function(df, cat) {
-  return(df %>%
-    filter(category == {{cat}}) %>%
         mutate(
             citation = str_replace_all(
                 citation,
