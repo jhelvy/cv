@@ -686,7 +686,15 @@ make_ordered_list_filtered(service, "dept")
 make_ordered_list_filtered(service, "college")
 ```
 
-## C. Professional Service
+## C. University Level Service (George Washington University)
+
+```{r}
+#| results: asis
+
+make_ordered_list_filtered(service, "university")
+```
+
+## D. Professional Service
 
 ```{r}
 #| results: asis
@@ -694,7 +702,7 @@ make_ordered_list_filtered(service, "college")
 make_ordered_list_filtered(service, "professional")
 ```
 
-## D. Peer Reviewer
+## E. Peer Reviewer
 
 Completed 73 journal reviews and 13 conference paper reviews (2013 - present)
 
