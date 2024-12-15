@@ -27,9 +27,10 @@ jobs:
           r-version: ${{ env.R_VERSION }}
           use-public-rspm: true  # Use RStudio Package Manager for better reliability
 
-      - name: Install libcurl4
+      - name: Install System Dependencies
         run: |
-          sudo apt-get install libcurl4-openssl-dev r-base
+          sudo apt-get update
+          sudo apt-get install -y libcurl4-openssl-dev r-base libicu-dev libharfbuzz-dev libfribidi-dev
 
       - name: Query R package dependencies
         run: |
