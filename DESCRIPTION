@@ -13,5 +13,5 @@ Imports:
     lubridate,
     pander,
     rvest,
-    tringr,
+    stringr,
     xml2
