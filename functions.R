@@ -1,4 +1,5 @@
 library(pander)
+library(stringr)
 library(dplyr)
 library(googlesheets4)
 library(lubridate)
@@ -43,11 +44,11 @@ make_ordered_list_filtered <- function(df, cat) {
   return(df %>%
     filter(category == {{cat}}) %>%
         mutate(
-          citation = gsub(
-            "\\\\\\*(\\w+),",
-            "\\\\*\\\\underline{\\1},",
-            citation
-          )
+            citation = str_replace_all(
+                citation,
+                "\\\\\\*(\\w+),",
+                "\\\\*\\\\underline{\\1},"
+            )
         ) %>%
     pull(citation) %>%
     make_ordered_list()

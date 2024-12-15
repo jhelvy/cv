@@ -348,7 +348,7 @@ presentation_counts <- presentations %>%
     order = seq(6)
   )) %>% 
   mutate(
-    category = tools::toTitleCase(category),
+    category = str_to_title(category),
     category = ifelse(category == 'Invited', 'Invited Speaker', category),
     category = ifelse(category == 'Panelist', 'Invited Panelist', category),
     category = ifelse(category == 'Conference', 'Conference Presentation', category),
@@ -430,12 +430,12 @@ media <- get_cv_sheet('media') %>%
 media_counts <- media %>%
   count(type) %>% 
   mutate(
-    type = gsub('_', ' ', type),
-    type = tools::toTitleCase(type),
+    type = str_replace_all(type, '_', ' '),
+    type = str_to_title(type), 
     type = ifelse(type == 'Tv', 'TV', type), 
     type = ifelse(type == 'Government', 'Federal Government', type), 
     cite = paste0(type, ' (', n, ')'),
-    has_press = grepl('Press', type)
+    has_press = str_detect(type, 'Press')
   ) %>% 
   arrange(!has_press) %>% 
   pull(cite) %>% 
@@ -714,7 +714,7 @@ _List of Journals_
 journals <- get_cv_sheet('reviews') %>% 
   filter(category == 'journal') %>% 
   pull(org)
-journals = gsub('and', '&', journals)
+journals <- str_replace_all(journals, 'and', '&')
 n_journals <- length(journals)
 stop <- round(n_journals/2)
 df <- data.frame(
