@@ -2,6 +2,7 @@ name: Render Quarto PDF
 on:
   push:
   schedule:
+     # Scheduled to run at midnight EST (5:00 UTC) every Sunday
     - cron: '0 5 * * 0'
 jobs:
   build:
@@ -13,11 +14,10 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Install system dependencies
+      - name: Install ICU and other dependencies
         run: |
-          sudo add-apt-repository ppa:ubuntu-toolchain-r/test
           sudo apt-get update
-          sudo apt-get install -y libicu70 libcurl4-openssl-dev r-base
+          sudo apt-get install -y libicu-dev libcurl4-openssl-dev r-base
 
       - name: Setup Quarto
         uses: quarto-dev/quarto-actions/setup@v2
@@ -44,6 +44,7 @@ jobs:
 
       - name: Install R dependencies
         run: |
+          install.packages("stringi", configure.args = "--with-icudt-system=yes")
           remotes::install_deps(dependencies = TRUE)
           install.packages("pkgdown")
         shell: Rscript {0}
@@ -69,5 +70,5 @@ jobs:
       - name: Commit and Push PDF
         run: |
           git add cv-jph.pdf
-          git commit -m "Update rendered PDF"
+          git commit -m "Update rendered PDF" || echo "No changes to commit"
           git push
