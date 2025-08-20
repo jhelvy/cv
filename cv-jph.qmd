@@ -62,14 +62,17 @@ gscholar_page <- paste0("https://scholar.google.com/citations?user=", gscholar_i
 
 \vspace{-10pt}
 \begin{longtable}{llp{15cm}}
-2018 - Present & \textbf{George Washington University}, Washington, D.C.& \\
+2025 - Present & \textbf{George Washington University}, Washington, D.C.& \\
+ & Associate Professor (with tenure), Engineering Management and Systems Engineering\\[5pt]
+ 
+2018 - 2025 & \textbf{George Washington University}, Washington, D.C.& \\
  & Assistant Professor, Engineering Management and Systems Engineering\\[5pt]
 
 2016 - 2018 & \textbf{Boston University}, Boston, MA & \\
  & Postdoctoral Fellow, Institute for Sustainable Energy\\
 \end{longtable}
 
-\vspace{-10pt}
+\vspace{-15pt}
 
 # Education & Training
 
@@ -96,7 +99,7 @@ gscholar_page <- paste0("https://scholar.google.com/citations?user=", gscholar_i
 
 \end{longtable}
 
-\vspace{-10pt}
+\vspace{-15pt}
 
 # Research Interests
 
@@ -105,7 +108,7 @@ gscholar_page <- paste0("https://scholar.google.com/citations?user=", gscholar_i
 - **Electric Vehicles & Sustainable Transportation Technologies**: Assess barriers and opportunities to accelerating the development & adoption of sustainable transportation technologies.
 - **U.S.-China Climate Relationship**: Study the critical relationship between the US and China in developing, scaling, and mass deploying low carbon energy technologies.
 
-\vspace{-10pt}
+\vspace{-15pt}
 
 # Teaching Interests
 
