@@ -537,8 +537,8 @@ make_ordered_list_filtered(teaching, "lecture")
 
 ### 2. Resources Developed
 
-- **Textbook**: ["Yet Another R Dataviz (YARD) Book"](https://yardbook.jhelvy.com/), written for [_EMSE 4572 / 6572: Exploratory Data Analysis_](http://eda.seas.gwu.edu/).
 - **Textbook**: ["Programming for Analytics in R"](https://p4a.jhelvy.com/), written for [_EMSE 4571 / 6571: Intro to Programming for Analytics_](http://p4a.seas.gwu.edu/).
+- **Textbook**: ["Yet Another R Dataviz (YARD) Book"](https://yardbook.jhelvy.com/), written for [_EMSE 4572 / 6572: Exploratory Data Analysis_](http://eda.seas.gwu.edu/).
 - **Video lecture series** for [_EMSE 6035: Marketing of Technology_](http://madd.seas.gwu.edu/). Six-lecture series on conjoint survey theory and practice. [View on youtube](https://www.youtube.com/playlist?list=PLzFdSE-D7jUQnbczxdjohRqlBBrrsaFFg).
 - **Autograder** for [_EMSE 4571 / 6571: Intro to Programming for Analytics_](http://p4a.seas.gwu.edu/). Students can test and receive automated feedback on their programming assignments.
 - **Course website**: [http://p4a.seas.gwu.edu/](http://p4a.seas.gwu.edu/), for _EMSE 4571 / 6571: Intro to Programming for Analytics_. Open source lessons on the fundamentals of programming for data analytics in R with a comparison to Python.
@@ -707,7 +707,7 @@ make_ordered_list_filtered(service, "professional")
 
 ## E. Peer Reviewer
 
-Completed 73 journal reviews and 13 conference paper reviews (2013 - present)
+Completed 85 journal reviews and 14 conference paper reviews (2013 - present)
 
 _List of Journals_
 
