@@ -298,7 +298,15 @@ make_ordered_list_filtered(pubs, "magazine")
 make_ordered_list_filtered(pubs, "oped")
 ```
 
-## G. Other Publications
+## G. Podcasts
+
+```{r}
+#| results: asis
+
+make_ordered_list_filtered(pubs, "podcast")
+```
+
+## H. Other Publications
 
 ```{r}
 #| results: asis
@@ -306,7 +314,7 @@ make_ordered_list_filtered(pubs, "oped")
 make_ordered_list_filtered(pubs, "other")
 ```
 
-## H. Theses
+## I. Theses
 
 ```{r}
 #| results: asis
@@ -314,7 +322,7 @@ make_ordered_list_filtered(pubs, "other")
 make_ordered_list_filtered(pubs, "theses")
 ```
 
-## I. Software
+## J. Software
 
 ```{r}
 #| results: asis
