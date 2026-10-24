@@ -715,7 +715,7 @@ make_ordered_list_filtered(service, "professional")
 
 ## E. Peer Reviewer
 
-Completed 85 journal reviews and 14 conference paper reviews (2013 - present)
+Completed 96 journal reviews and 14 conference paper reviews (2013 - present)
 
 _List of Journals_
 
