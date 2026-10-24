@@ -43,17 +43,17 @@ gscholar_page <- paste0("https://scholar.google.com/citations?user=", gscholar_i
 
 \par\centering{\LARGE{John Paul Helveston, Ph.D.}}
 \par\centering{Engineering Management and Systems Engineering}
-\vspace{-5pt}
+\vspace{-8pt}
 \par\centering{The George Washington University}
-\vspace{-5pt}
+\vspace{-8pt}
 \par\centering{Science \& Engineering Hall, Office 2830}
-\vspace{-5pt}
+\vspace{-8pt}
 \par\centering{800 22nd St NW, Washington, DC 20052}
-\vspace{-5pt}
+\vspace{-8pt}
 \par\centering{{\large\Telefon} +1 (202) 994-7173}
-\vspace{-5pt}
+\vspace{-8pt}
 \par\centering{{\large\Letter} jph@gwu.edu}
-\vspace{-5pt}
+\vspace{-8pt}
 \par\centering{\href{http://www.jhelvy.com}{www.jhelvy.com}}
 
 \vspace{-10pt}
@@ -114,6 +114,7 @@ gscholar_page <- paste0("https://scholar.google.com/citations?user=", gscholar_i
 
 - **Programming \& Data Analytics**: Programming in R and Python; exploratory data analysis; data visualization; reproducibility.
 - **Choice Modeling**: Discrete choice modeling; consumer preferences and choice behavior; conjoint analysis; design decisions.
+- **AI-Assisted Workflows**: Using agentic AI tools for research, data analysis, and software development; version control and testing practices for reproducible work.
 - **Team Projects**: Open-ended, team-based projects that emphasize critical thinking and real-world data collection and analysis.
 
 # External Grants
@@ -542,12 +543,13 @@ make_ordered_list_filtered(teaching, "lecture")
 - **[EMSE 4571 / 6571](http://p4a.seas.gwu.edu/): Intro to Programming for Analytics**. Developed new open-source introductory level course that provides a foundation in programming for data analytics using the [R programming language](https://www.r-project.org/) with a comparison to [Python](https://www.python.org/). 
 - **[EMSE 4572 / 6572](http://eda.seas.gwu.edu/): Exploratory Data Analysis**. Developed new open-source course that provides a foundation in exploring data using the [R programming language](https://www.r-project.org/), including how to source, manage, wrangle, explore, and visualize a wide variety of data types. All analyses are reproducible from raw data to results using [RMarkdown](https://bookdown.org/yihui/rmarkdown/) and [Quarto](https://quarto.org/). Students demonstrate mastery of these skills through a semester-long research project of their own design, culminating in a reproducible final report and a 10-minute presentation of their findings.
 - **[EMSE 6035](http://madd.seas.gwu.edu/): Marketing Analytics for Design Decisions**. Developed a new open-source course that introduces data analysis techniques to inform design decisions in an uncertain, competitive market. Over the course of the semester, students learn and apply theory and methods to a team project to assess the market competitiveness of an emerging product or technology. Students learn how to design and field conjoint surveys as well as how to source, manage, and visualize data and modeling results using the [R programming language](https://www.r-project.org/). Students demonstrate mastery of these skills through a semester-long research project of their own design, culminating in a final report and a 10-minute presentation of their design insights.
+- **EMSE 6992: Introduction to Agentic Workflows** (in development, planned for Fall 2027). New graduate course on using agentic AI tools (agents that can read files, run code, and carry out multi-step tasks) for research and productivity.
 
 ### 2. Resources Developed
 
 - **Textbook**: ["Programming for Analytics in R"](https://p4a.jhelvy.com/), written for [_EMSE 4571 / 6571: Intro to Programming for Analytics_](http://p4a.seas.gwu.edu/).
 - **Textbook**: ["Yet Another R Dataviz (YARD) Book"](https://yardbook.jhelvy.com/), written for [_EMSE 4572 / 6572: Exploratory Data Analysis_](http://eda.seas.gwu.edu/).
-- **Video lecture series** for [_EMSE 6035: Marketing of Technology_](http://madd.seas.gwu.edu/). Six-lecture series on conjoint survey theory and practice. [View on youtube](https://www.youtube.com/playlist?list=PLzFdSE-D7jUQnbczxdjohRqlBBrrsaFFg).
+- **Video lecture series** for [_EMSE 6035: Marketing Analytics for Design Decisions_](http://madd.seas.gwu.edu/). Six-lecture series on conjoint survey theory and practice. [View on youtube](https://www.youtube.com/playlist?list=PLzFdSE-D7jUQnbczxdjohRqlBBrrsaFFg).
 - **Autograder** for [_EMSE 4571 / 6571: Intro to Programming for Analytics_](http://p4a.seas.gwu.edu/). Students can test and receive automated feedback on their programming assignments.
 - **Course website**: [http://p4a.seas.gwu.edu/](http://p4a.seas.gwu.edu/), for _EMSE 4571 / 6571: Intro to Programming for Analytics_. Open source lessons on the fundamentals of programming for data analytics in R with a comparison to Python.
 - **Course website**: [http://eda.seas.gwu.edu/](http://eda.seas.gwu.edu/), for _EMSE 4572 / 6572: Exploratory Data Analysis_. Open source lessons on sourcing, managing, transforming, and exploring a wide variety of data types in R.
@@ -632,7 +634,7 @@ advisees %>%
   make_ordered_list_filtered("ug")
 ```
 
-### 4. High School Students
+### 6. High School Students
 
 ```{r}
 #| results: asis
@@ -715,7 +717,16 @@ make_ordered_list_filtered(service, "professional")
 
 ## E. Peer Reviewer
 
-Completed 96 journal reviews and 14 conference paper reviews (2013 - present)
+```{r}
+review_counts <- get_cv_sheet('review_counts')
+get_review_count <- function(cat) {
+  review_counts %>%
+    filter(category == {{cat}}) %>%
+    pull(count)
+}
+```
+
+Completed `r get_review_count('journal')` journal reviews, `r get_review_count('conf')` conference paper reviews, and `r get_review_count('funding')` funding proposal reviews (2013 - present)
 
 _List of Journals_
 
@@ -727,10 +738,13 @@ journals <- get_cv_sheet('reviews') %>%
   pull(org)
 journals <- str_replace_all(journals, 'and', '&')
 n_journals <- length(journals)
-stop <- round(n_journals/2)
+stop <- ceiling(n_journals/2)
+# Pad the second column so both columns have the same length
+j2 <- journals[(stop + 1):n_journals]
+j2 <- c(j2, rep("", stop - length(j2)))
 df <- data.frame(
   j1 = journals[1:stop], 
-  j2 = journals[(stop + 1):n_journals]
+  j2 = j2
 ) 
 
 table_latex <- df %>%
@@ -794,7 +808,7 @@ cat(table_latex)
 - _Co-Founder and Organizer_, [GW Coders](https://gwcoders.github.io/): Informal study group to apply computational and data analytics skills in research (2020-present).
 - _Analyst & Committee Member_, Boston University Climate Action Plan Task Force (2016 - 2018).
 - _Violinist_, Carnegie Mellon All University Orchestra, 1st Violin Section (2011 - 2015).
-_ Dance Instructor_, Tartan Swing (CMU Swing Dance Club) (2011 - 2015).
+- _Dance Instructor_, Tartan Swing (CMU Swing Dance Club) (2011 - 2015).
 - _Head Dance Instructor_, Solely Swing, Virginia Tech Swing Dance Club (2007 - 2010).
 - _Concert Master_, New River Valley Symphony Orchestra, Virginia Tech (2005 - 2010).
 - _Volunteer_, Virginia Tech Alternative Breaks Service Programs for Tau Beta Pi, Appalachia Service Project, & Presbyterian Campus Ministries (2006 - 2009).
