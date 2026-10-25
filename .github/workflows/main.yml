@@ -56,6 +56,7 @@ jobs:
 
       - name: Install LaTeX Packages with TinyTeX
         run: |
+          tlmgr update --self
           tlmgr install marvosym parskip fancyhdr lastpage xecjk hyperref xcolor
 
       - name: Render PDF
