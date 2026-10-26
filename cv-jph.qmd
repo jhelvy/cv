@@ -224,7 +224,7 @@ awards %>%
 
 ORCID: \href{https://orcid.org/0000-0002-2657-9191}{0000-0002-2657-9191} | [Google Scholar Profile](https://scholar.google.com/citations?user=DY2D56IAAAAJ&hl=en)
 
-\underline{Underline} indicates advisee; * graduate student, **undergraduate student
+\underline{Underline} indicates advisee; \textsuperscript{†}postdoc, * graduate student, **undergraduate student
 
 \begin{small}
 \emph{Note on author order: In my field, it is conventional that the last author denotes intellectual direction by the senior author when advised student(s) are engaged on the study. On non–student papers, authorship effort is denoted in standard order}.
@@ -261,7 +261,15 @@ make_ordered_list_filtered(pubs, "peer_reviewed")
 make_ordered_list_filtered(pubs, "conference")
 ```
 
-## C. Working Papers & Papers Under Review
+## C. Papers Under Review
+
+```{r}
+#| results: asis
+ 
+make_ordered_list_filtered(pubs, "under_review")
+```
+
+## D. Working Papers
 
 ```{r}
 #| results: asis
@@ -269,7 +277,7 @@ make_ordered_list_filtered(pubs, "conference")
 make_ordered_list_filtered(pubs, "working")
 ```
 
-## D. Books and Book Chapters
+## E. Books and Book Chapters
 
 ```{r}
 #| results: asis
@@ -283,7 +291,7 @@ pubs %>%
   make_ordered_list_filtered("book")
 ```
 
-## E. Magazine Publications
+## F. Magazine Publications
 
 ```{r}
 #| results: asis
@@ -291,7 +299,7 @@ pubs %>%
 make_ordered_list_filtered(pubs, "magazine")
 ```
 
-## F. Opinion Editorials
+## G. Opinion Editorials
 
 ```{r}
 #| results: asis
@@ -299,7 +307,7 @@ make_ordered_list_filtered(pubs, "magazine")
 make_ordered_list_filtered(pubs, "oped")
 ```
 
-## G. Podcasts
+## H. Podcasts
 
 ```{r}
 #| results: asis
@@ -307,7 +315,7 @@ make_ordered_list_filtered(pubs, "oped")
 make_ordered_list_filtered(pubs, "podcast")
 ```
 
-## H. Other Publications
+## I. Other Publications
 
 ```{r}
 #| results: asis
@@ -315,7 +323,7 @@ make_ordered_list_filtered(pubs, "podcast")
 make_ordered_list_filtered(pubs, "other")
 ```
 
-## I. Theses
+## J. Theses
 
 ```{r}
 #| results: asis
@@ -323,7 +331,7 @@ make_ordered_list_filtered(pubs, "other")
 make_ordered_list_filtered(pubs, "theses")
 ```
 
-## J. Software
+## K. Software
 
 ```{r}
 #| results: asis

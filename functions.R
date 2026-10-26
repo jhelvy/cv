@@ -48,6 +48,11 @@ make_ordered_list_filtered <- function(df, cat) {
                 citation,
                 "\\\\\\*(\\w+),",
                 "\\\\*\\\\underline{\\1},"
+            ),
+            citation = str_replace_all(
+                citation,
+                "\\u2020(\\w+),",
+                "\\\\textsuperscript{†}\\\\underline{\\1},"
             )
         ) %>%
     pull(citation) %>%
