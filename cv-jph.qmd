@@ -60,46 +60,34 @@ gscholar_page <- paste0("https://scholar.google.com/citations?user=", gscholar_i
 
 # Academic Appointments
 
-\vspace{-10pt}
-\begin{longtable}{llp{15cm}}
+\vspace{-8pt}
+\begin{tabular}{lll}
 2025 - Present & \textbf{George Washington University}, Washington, D.C.& \\
  & Associate Professor (with tenure), Engineering Management and Systems Engineering\\[5pt]
- 
 2018 - 2025 & \textbf{George Washington University}, Washington, D.C.& \\
  & Assistant Professor, Engineering Management and Systems Engineering\\[5pt]
-
 2016 - 2018 & \textbf{Boston University}, Boston, MA & \\
  & Postdoctoral Fellow, Institute for Sustainable Energy\\
-\end{longtable}
+\end{tabular}
 
-\vspace{-15pt}
+\vspace{-4pt}
 
 # Education & Training
 
-\vspace{-10pt}
-\begin{longtable}{lll}
-
+\vspace{-8pt}
+\begin{tabular}{lll}
     2016 & Carnegie Mellon University, Pittsburgh, PA & Ph.D. Engineering and Public Policy\\
-
     \multicolumn{3}{l}{Dissertation: \emph{Development and Adoption of Plug-in Electric Vehicles in China: Markets, Policy, and Innovation}}\\
-    
     \multicolumn{3}{l}{Doctoral Committee: \emph{Jeremy Michalek, Erica Fuchs, Elea McDonnell Feit, \& Valerie Karplus}}\\[5pt]
-    
     2015 & Carnegie Mellon University, Pittsburgh, PA & M.S. Engineering and Public Policy\\
-
     2010 & Virginia Tech, Blacksburg, VA & B.S. Engineering Science and Mechanics\\[5pt]
-
     \multicolumn{2}{l}{\textbf{Mandarin Chinese Training}}\\
-
     2010 & National Taiwan University, Taipei, Taiwan & Business Chinese (Huayu Scholarship) \\
-
     2009 & Heilongjiang University, Harbin, China & Intensive Chinese (Critical Language Scholarship)\\
-
     2008 & Liaoning Normal University, Dalian, China & Independent Study (Horton Scholarship)\\
+\end{tabular}
 
-\end{longtable}
-
-\vspace{-15pt}
+\vspace{-4pt}
 
 # Research Interests
 
@@ -734,10 +722,6 @@ get_review_count <- function(cat) {
 }
 ```
 
-Completed `r get_review_count('journal')` journal reviews, `r get_review_count('conf')` conference paper reviews, and `r get_review_count('funding')` funding proposal reviews (2013 - present)
-
-_List of Journals_
-
 ```{r}
 #| results: asis
 
@@ -789,6 +773,20 @@ table_latex <- paste0(
   "\\renewcommand{\\tabcolsep}{0.5em}\n",
   "\\renewcommand{\\arrayrulewidth}{0.0pt}\n",
   table_latex
+)
+
+# Drop the floating table environment and wrap the review counts, label, and
+# table in a minipage so they always stay together on one page
+table_latex <- gsub("\\\\begin\\{table\\}(\\[[^]]*\\])?", "", table_latex)
+table_latex <- gsub("\\\\end\\{table\\}", "", table_latex)
+table_latex <- paste0(
+  "\\begin{minipage}{\\linewidth}\n\\centering\n",
+  "Completed ", get_review_count('journal'), " journal reviews, ",
+  get_review_count('conf'), " conference paper reviews, and ",
+  get_review_count('funding'), " funding proposal reviews (2013 - present)\\par\\vspace{4pt}\n",
+  "\\emph{List of Journals}\\par\\vspace{4pt}\n",
+  table_latex,
+  "\n\\end{minipage}\n"
 )
 
 cat(table_latex)
