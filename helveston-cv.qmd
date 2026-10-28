@@ -91,13 +91,17 @@ gscholar_page <- paste0("https://scholar.google.com/citations?user=", gscholar_i
 
 # Research Interests
 
-- **Human Behavior in Energy & Transportation Systems**: EV adoption and use; conjoint analysis; preferences and policy design; smart charging and grid integration; vehicle access and affordability.
+\vspace{-8pt}
+
+- **Human Behavior in Energy & Transportation Systems**: EV adoption and use; conjoint analysis; policy design; smart charging and grid integration; vehicle access and affordability.
 - **Methods & Research Software**: Discrete choice modeling; machine learning for preference heterogeneity; open-source research software; survey data quality and AI.
 - **Global Clean Technology Industries & China**: Supply chains and learning curves; industrial policy; U.S.-China competition and collaboration.
 
 \vspace{-15pt}
 
 # Teaching Interests
+
+\vspace{-8pt}
 
 - **Programming \& Data Analytics**: Programming in R and Python; exploratory data analysis; data visualization; reproducibility.
 - **Choice Modeling**: Discrete choice modeling; consumer preferences and choice behavior; conjoint analysis; design decisions.
