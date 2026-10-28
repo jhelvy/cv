@@ -61,7 +61,7 @@ jobs:
 
       - name: Render PDF
         run: |
-          quarto render cv-jph.qmd --to pdf
+          quarto render helveston-cv.qmd --to pdf
 
       - name: Set up Git Config
         run: |
@@ -70,6 +70,6 @@ jobs:
 
       - name: Commit and Push PDF
         run: |
-          git add cv-jph.pdf
+          git add helveston-cv.pdf
           git commit -m "Update rendered PDF" || echo "No changes to commit"
           git push
