@@ -10,6 +10,10 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_VERSION: '4.3.2'
+      # R needs a UTF-8 locale, otherwise non-ASCII characters from the
+      # Google sheet (e.g. the † postdoc marker) render as <U+2020>
+      LANG: C.UTF-8
+      LC_ALL: C.UTF-8
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v5
