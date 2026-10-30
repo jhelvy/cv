@@ -268,7 +268,31 @@ make_ordered_list_filtered(pubs, "under_review")
 make_ordered_list_filtered(pubs, "working")
 ```
 
-## E. Books and Book Chapters
+## E. Policy Briefs
+
+```{r}
+#| results: asis
+
+make_ordered_list_filtered(pubs, "policy_brief")
+```
+
+## F. Magazine Publications
+
+```{r}
+#| results: asis
+ 
+make_ordered_list_filtered(pubs, "magazine")
+```
+
+## G. Commentary and Analysis
+
+```{r}
+#| results: asis
+ 
+make_ordered_list_filtered(pubs, "oped")
+```
+
+## H. Books and Book Chapters
 
 ```{r}
 #| results: asis
@@ -282,23 +306,7 @@ pubs %>%
   make_ordered_list_filtered("book")
 ```
 
-## F. Magazine Publications
-
-```{r}
-#| results: asis
- 
-make_ordered_list_filtered(pubs, "magazine")
-```
-
-## G. Opinion Editorials
-
-```{r}
-#| results: asis
- 
-make_ordered_list_filtered(pubs, "oped")
-```
-
-## H. Podcasts
+## I. Podcasts
 
 ```{r}
 #| results: asis
@@ -306,7 +314,7 @@ make_ordered_list_filtered(pubs, "oped")
 make_ordered_list_filtered(pubs, "podcast")
 ```
 
-## I. Other Publications
+## J. Other Publications
 
 ```{r}
 #| results: asis
@@ -314,7 +322,7 @@ make_ordered_list_filtered(pubs, "podcast")
 make_ordered_list_filtered(pubs, "other")
 ```
 
-## J. Theses
+## K. Theses
 
 ```{r}
 #| results: asis
@@ -322,7 +330,7 @@ make_ordered_list_filtered(pubs, "other")
 make_ordered_list_filtered(pubs, "theses")
 ```
 
-## K. Software
+## L. Software
 
 ```{r}
 #| results: asis
